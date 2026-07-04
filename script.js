@@ -5,8 +5,8 @@
   const photos = Array.from(story.querySelectorAll('.story-photo'));
   const dots = Array.from(story.querySelectorAll('.story-dot'));
   const quote = story.querySelector('#story-quote');
-  const name = story.querySelector('#story-name');
-  const branche = story.querySelector('#story-branche');
+  const person = story.querySelector('#story-person');
+  const firm = story.querySelector('#story-firm');
   const link = story.querySelector('#story-link');
   if (photos.length < 2) return;
   let i = 0, timer;
@@ -16,9 +16,9 @@
     photos.forEach((p, k) => p.classList.toggle('is-active', k === i));
     dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
     const p = photos[i].dataset;
-    if (quote) quote.textContent = p.quote;
-    if (name) name.textContent = p.name;
-    if (branche) branche.textContent = p.branche;
+    if (quote) quote.textContent = '„' + p.quote + '“';
+    if (person) person.textContent = p.person;
+    if (firm) firm.textContent = p.firm;
     if (link) link.href = p.url;
   }
   function next() { show(i + 1); }

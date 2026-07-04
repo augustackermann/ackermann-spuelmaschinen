@@ -117,8 +117,8 @@ def page(active, title, body, description=""):
       <a href="/karriere/">Karriere</a>
       <a href="/news/">News</a>
     </nav>
-    <nav class="footer__col" aria-label="Kontakt und Rechtliches">
-      <h4>Kontakt</h4>
+    <nav class="footer__col" aria-label="Kontakt und Links">
+      <h4>Links</h4>
       <a href="tel:+4975029779100">+49 (0)7502 97791 00</a>
       <a href="mailto:info@ackermann-spuelmaschinen.de">info@ackermann-spuelmaschinen.de</a>
       <div class="footer__social">
@@ -127,6 +127,8 @@ def page(active, title, body, description=""):
       </div>
       <a href="/impressum/">Impressum</a>
       <a href="/datenschutz/">Datenschutz</a>
+      <a href="/cookie-richtlinie-eu/">Cookie-Richtlinie (EU)</a>
+      <a href="/downloadbereich/">Downloadbereich</a>
     </nav>
   </div>
   <div class="footer__bottom"><div class="container">© {year} Ackermann Spülmaschinen GmbH · Baindt · Näher dran sein.</div></div>
@@ -176,14 +178,17 @@ SOLUTIONS = [
 
 MACHINES = {
     "Untertischspülmaschinen": [
+        ("U 430-2", "Gläser", "U-430-2.png", "u-430-2"),
         ("U 440", "Gläser", "U-440.png", "u-440"),
         ("U 540 Bistro", "Gläser", "U-540-Bistro.png", "u-540-bistro"),
-        ("U 540E", "Gläser / Geschirr", "U-540E.png", "u-540e"),
-        ("U 640E", "Gläser / Geschirr / Gerätschaften", "U-640E.png", "u-640e"),
+        ("U 530-2 / U 530-2E", "Gläser / Geschirr", "U-530-2.png", "u-530-2"),
+        ("U 540 / U 540E", "Gläser / Geschirr", "U-540E.png", "u-540e"),
+        ("U 640 / U 640E", "Gläser / Geschirr / Gerätschaften", "U-640E.png", "u-640e"),
     ],
     "Haubenspülmaschinen": [
-        ("H 540E", "Gläser / Geschirr", "H-540E.png", "h-540e"),
-        ("H 540E Klima+", "Gläser / Geschirr", "H-540E-Klima-Plus.png", "h-540e-klima-plus"),
+        ("H 530-2 / H 530-2E", "Gläser / Geschirr", "H-530-2.png", "h-530-2"),
+        ("H 540 / H 540E", "Gläser / Geschirr", "H-540E.png", "h-540e"),
+        ("H 540 Klima+ / H 540E Klima+", "Gläser / Geschirr", "H-540E-Klima-Plus.png", "h-540e-klima-plus"),
         ("H 640", "Gläser / Geschirr / Gerätschaften", "H-640.png", "h-640"),
         ("H 640 Klima+", "Gläser / Geschirr / Gerätschaften", "H-640-Klima-Plus.png", "h-640-klima-plus"),
     ],
@@ -212,12 +217,31 @@ ANDERSMACHER = [
     ("Ellgass", None, "/die-andersmacher/ellgass/"),
 ]
 
-CHEMIE = {
-    "Reiniger": ["F 440 Bistro", "F 450 green", "F 500 GS", "P 500 GS", "F 540 Power", "F 600 GR"],
-    "Spezialreiniger": ["Gläsergrundreiniger"],
-    "Klarspüler": ["KLAR GS", "KLAR GG sauer"],
-    "Weitere": ["Entkalker", "Regeneriersalz"],
-}
+# (name, group, description, image, datasheet-pdf-or-None)
+CHEMIE_PRODUCTS = [
+    ("F 440 Bistro", "Reiniger", "Flüssigreiniger zur Anwendung in gewerblichen Gläser- und Geschirrspülmaschinen.",
+     "F_440_Bistro.jpg", "F440_Bistro.pdf"),
+    ("F 450 green", "Reiniger", "Umweltschonender Flüssigreiniger für gewerbliche Gläser- und Geschirrspülmaschinen.",
+     "F_450_Green.jpg", "F450-Green.pdf"),
+    ("F 500 GS", "Reiniger", "Flüssigreiniger zur Anwendung in gewerblichen Geschirrspülmaschinen.",
+     "F_500_GS.jpg", "F500-GS.pdf"),
+    ("P 500 GS", "Reiniger", "Pulverreiniger zur Anwendung in gewerblichen Geschirrspülmaschinen.",
+     "P_500_GS-3.jpg", "Pulverreiniger-P-500-GS.pdf"),
+    ("F 540 Power", "Reiniger", "Kraftvoller Flüssigreiniger für gewerbliche Geschirrspülmaschinen.",
+     "F_540_Power.jpg", "F540-Power.pdf"),
+    ("F 600 GR", "Reiniger", "Flüssigreiniger für gewerbliche Geschirr- und Gerätespülmaschinen.",
+     "F_600_GR.jpg", "F600-GR.pdf"),
+    ("Gläsergrundreiniger", "Spezialreiniger", "Flüssiger Spezialreiniger zur Grundreinigung von Gläsern vor dem ersten maschinellen Spülen.",
+     "Glaesergrundreiniger.jpg", "Grundreiniger.pdf"),
+    ("KLAR GS", "Klarspüler", "Universeller, leicht saurer Klarspüler mit gutem Benetzungsvermögen und schaumreduzierender Wirkung.",
+     "Klar_GS.jpg", "Klar-GS.pdf"),
+    ("KLAR GG sauer", "Klarspüler", "Saurer Klarspüler, besonders geeignet für Gläser sowie Edelstahl- und Kunststoffgeschirr.",
+     "Klar_GG_sauer.jpg", "Klar-GG-sauer.pdf"),
+    ("Entkalker F", "Pflege", "Flüssiger Entkalker gegen Kalkablagerungen – für Spülmaschinen, Kaffeemaschinen, Heißluftdämpfer und Heißwasseraufbereiter.",
+     "Entkalker.jpg", "Entkalker-F.pdf"),
+    ("Regeneriersalz 2/6", "Pflege", "Regeneriersalz für Spülmaschinen mit eingebautem Enthärter.",
+     "Geschirrspuelsalz.jpg", None),
+]
 
 # ---------------------------------------------------------------- builders
 def cards_solutions():
@@ -249,65 +273,60 @@ def andersmacher_grid():
         c += f'<a class="ref" href="{url}"><div class="ref__media">{media}</div><span class="ref__name">{html.escape(name)}</span></a>'
     return f'<div class="cards cards--4 refs">{c}</div>'
 
+# Real quotes + people from the official homepage slider (own company content)
 STORY_SLIDES = [
-    ("Härle's Hofcafé", "Hofcafé · Bodensee", "Ackermann_Haerle_Slider-3.jpg",
-     "Mit so wenig Wasser so sauber spülen – das hat uns sofort überzeugt.", "/die-andersmacher/haerles-hofcafe/"),
-    ("Metzgerei Kutter", "Metzgerei", "metzgerei-kutter-slider.jpg",
-     "Unschlagbar in Preis und Leistung – und einfach immer zuverlässig.", "/die-andersmacher/metzgerei-kutter/"),
-    ("Max.Café", "Café & Rösterei", "Ackermann_Max_Cafe_2.jpg",
-     "Verlässliche Technik, die jeden Ansturm im Service mitmacht.", "/die-andersmacher/max-cafe/"),
-    ("Pier 40", "Gastronomie am Wasser", "Ackermann-Spuelmaschinen-Pier40-Slider.jpg",
-     "Endlich Service, der schnell da ist, wenn es drauf ankommt.", "/die-andersmacher/pier-40/"),
-    ("Haus Nazareth", "Gemeinschaftsverpflegung", "HausNazareth_Ackermann_Spuelmaschinen-Slider.jpg",
-     "Große Küche, viele Essen am Tag – auf die Maschine ist Verlass.", "/die-andersmacher/haus-nazareth/"),
-    ("Hirscheck", "Gastronomie", "Hirscheck_12.jpg",
-     "Neu dabei und überzeugt von der Alternative im Premiumbereich.", "/die-andersmacher/hirscheck/"),
+    ("Mit so wenig Wasser so sauber spülen", "Bruno Stotz", "Der Stotz Hof, Markdorf",
+     "ackermann-slider-stotzhof.jpg", "/die-andersmacher/stotz-hof/"),
+    ("Die stehen zu ihrem Produkt", "Michael Habereder", "Haus Nazareth, Sigmaringen",
+     "HausNazareth_Ackermann_Spuelmaschinen-Slider.jpg", "/die-andersmacher/haus-nazareth/"),
+    ("Unschlagbar in Preis/Leistung", "Anna Härle-Löffler", "Härle's Hofcafé, Ostrach",
+     "Ackermann_Haerle_Slider-3.jpg", "/die-andersmacher/haerles-hofcafe/"),
+    ("Beim Service meilenweit voraus", "Maximilian Sedelmayr", "Max.Café, Weingarten",
+     "Ackermann_Max_Cafe_2.jpg", "/die-andersmacher/max-cafe/"),
+    ("Lieber einfach und länger haltbar als Schnickschnack", "Laila Klinger", "Pier 40, Friedrichshafen",
+     "Ackermann-Spuelmaschinen-Pier40-Slider.jpg", "/die-andersmacher/pier-40/"),
+    ("Wir sind nach wie vor begeistert", "Gerhard Kutter", "Metzgerei Kutter, Bermatingen",
+     "metzgerei-kutter-slider.jpg", "/die-andersmacher/metzgerei-kutter/"),
+    ("Bei Ackermann stimmt die DNA", "Dr. Reinhard Klumpp", "Culina GmbH & Co. KG, Friedrichshafen",
+     "ackermann-andersmacher-culina-slider.jpg", "/die-andersmacher/culina/"),
+    ("Wir geben 5 von 5 Sternen", "Kim Fleck und Florian Lorenz", "Hirscheck, Ravensburg",
+     "Hirscheck_12.jpg", "/die-andersmacher/hirscheck/"),
+    ("Ein Unternehmen mit Haltung", "Felix Ellgass", "Ellgass Allgäu-Hotel",
+     "ellgass-hotel.jpg", "/die-andersmacher/ellgass/"),
 ]
 
 def story_slider():
     photos = ""
     dots = ""
-    for i, (name, branche, img, quote, url) in enumerate(STORY_SLIDES):
+    for i, (quote, person, firm, img, url) in enumerate(STORY_SLIDES):
         active = " is-active" if i == 0 else ""
-        photos += f"""<img class="story-photo{active}" src="/assets/img/{img}" alt="{html.escape(name)}"
-          data-name="{html.escape(name)}" data-branche="{html.escape(branche)}"
-          data-quote="{html.escape(quote)}" data-url="{url}" loading="lazy">"""
+        photos += f"""<img class="story-photo{active}" src="/assets/img/{img}" alt="{html.escape(firm)}"
+          data-quote="{html.escape(quote)}" data-person="{html.escape(person)}"
+          data-firm="{html.escape(firm)}" data-url="{url}" loading="{'eager' if i == 0 else 'lazy'}">"""
         dots += f'<button class="story-dot{active}" data-go="{i}" aria-label="Story {i+1}"></button>'
     first = STORY_SLIDES[0]
-    return f"""<section class="story" id="stories">
+    return f"""<section class="story" id="stories" aria-label="Die Andersmacher – Kundenstimmen">
   <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--1" aria-hidden="true">
-  <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--2" aria-hidden="true">
   <div class="container">
-    <div class="section__head">
-      <p class="eyebrow">Die Andersmacher</p>
-      <h2>Echte Betriebe, die anders spülen</h2>
-      <p class="section__sub">Kleine Geschichten von Kundinnen und Kunden, die auf Ackermann setzen.</p>
-    </div>
-    <div class="story-stage">
-      <div class="story-frame">
+    <div class="as-grid">
+      <div class="as-panel">
+        <p class="eyebrow eyebrow--light">Die Andersmacher</p>
+        <blockquote id="story-quote">&bdquo;{html.escape(first[0])}&ldquo;</blockquote>
+        <div class="as-person">
+          <strong id="story-person">{html.escape(first[1])}</strong>
+          <span id="story-firm">{html.escape(first[2])}</span>
+        </div>
+        <a id="story-link" href="{first[4]}" class="btn btn--ghost btn--sm">Zur Story &rarr;</a>
+        <div class="story-dots">{dots}</div>
+      </div>
+      <div class="as-media">
         {photos}
-        <div class="story-shade"></div>
         <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
         <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
-        <div class="story-caption">
-          <span class="story-badge">Andersmacher</span>
-          <blockquote id="story-quote">{html.escape(first[3])}</blockquote>
-          <div class="story-meta"><strong id="story-name">{html.escape(first[0])}</strong><span id="story-branche">{html.escape(first[1])}</span></div>
-          <a id="story-link" href="{first[4]}" class="story-link">Ganze Story lesen &rarr;</a>
-        </div>
       </div>
-      <div class="story-dots">{dots}</div>
     </div>
   </div>
 </section>"""
-
-def stats_strip():
-    stats = [("Top 5", "Systemanbieter der Branche"),
-             ("min.", "Wasser- &amp; Energieverbrauch"),
-             ("1.", "Preis-Leistung im Premiumbereich"),
-             ("100%", "Service &amp; Beratung aus einer Hand")]
-    return '<section class="stats"><div class="container stats__grid">' + "".join(
-        f'<div class="stat"><strong>{s}</strong><span>{t}</span></div>' for s, t in stats) + '</div></section>'
 
 def cta_band(title, text, btn_text="Kontakt aufnehmen", btn_url="/kontakt/"):
     return f"""<section class="cta"><div class="container cta__inner">
@@ -321,18 +340,46 @@ PAGES = {}
 # HOME
 PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
  "/", "Dein Partner für gewerbliche Spültechnik",
- hero("Die Alternative im Premiumbereich",
-      "Dein Partner für gewerbliche Spültechnik",
-      "Ob Gastronomie, Hotellerie, Gemeinschaftsverpflegung, Bäckereien und Metzgereien oder mobiles Spülen auf Feiern und Festen – wir liefern das beste Preis-Leistungs-Verhältnis im Premiumbereich, erstklassigen Service und nachhaltige Lösungen mit extrem niedrigem Wasserverbrauch.",
-      cta=[("Entdecke unsere Lösungen", "/#loesungen", "btn--primary"),
-           ("Warum Ackermann?", "/ueber-uns/", "btn--ghost")],
-      img="/assets/img/machines/H-640.png", cls="hero--home")
- + story_slider()
- + stats_strip()
+ story_slider()
+ + """<section class="section partner">
+  <div class="container partner__inner">
+    <h1>Dein Partner für gewerbliche Spültechnik</h1>
+    <p class="partner__text">Ackermann Spülmaschinen ist Dein Partner für gewerbliche Spülmaschinen:
+    ob in der <a href="/gastronomie-und-hotellerie/">Gastronomie und Hotellerie</a>, der
+    <a href="/gemeinschaftsverpflegung-und-catering/">Gemeinschaftsverpflegung</a>, für
+    <a href="/baeckereien-und-metzgereien/">Bäckereien und Metzgereien</a> oder beim
+    <a href="/ausser-haus-und-mobiles-spuelen/">mobilen Spülen</a> auf Feiern und Festen.
+    Wir bieten Dir das beste Preis-Leistungs-Verhältnis im Premiumbereich und darüber hinaus einen
+    erstklassigen <a href="/ueber-uns/service/">Service</a>, sinnvolle
+    <a href="/ueber-uns/innovationen/">Innovationen</a> und
+    <a href="/ueber-uns/nachhaltigkeit/">nachhaltige Lösungen</a> – zum Beispiel durch einen
+    extrem niedrigen Wasserverbrauch.</p>
+    <a href="#loesungen" class="btn btn--primary">Entdecke unsere Lösungen für Deine Branche!</a>
+  </div>
+</section>"""
  + f'<section class="section" id="loesungen"><div class="container">'
    + section_head("Lösungen für Deine Branche", "Für jeden Einsatz die passende Spültechnik",
        "Entdecke unsere Lösungen für Deine Branche – individuell abgestimmt auf Deine Anforderungen, Deine Abläufe und Dein Spülgut.")
    + cards_solutions() + '</div></section>'
+ + """<section class="section section--dark alt-sec">
+  <div class="container alt-sec__inner">
+    <div class="alt-sec__text">
+      <p class="eyebrow eyebrow--light">Warum Ackermann?</p>
+      <h2>Die Alternative im Premiumbereich</h2>
+      <p>Als Systemanbieter für gewerbliche Spültechnik haben wir uns in den Top 5 der Branche
+      etabliert. Das macht uns stolz. Wir wollen näher dran sein an Deinen Bedürfnissen – und
+      Dinge anders machen, damit Du es einfach hast.</p>
+      <p>Das beginnt bei den Kosten: Wir sind extrem schlank aufgestellt, kalkulieren scharf und
+      konzentrieren uns auf alles, was für ein optimales Spülergebnis nötig ist. Deshalb sind
+      unsere Maschinen so überraschend günstig. Und das gilt genauso für den Service: Unsere
+      Techniker stehen Dir rund um die Uhr zur Verfügung – auch am Wochenende.</p>
+      <a href="/ueber-uns/" class="btn btn--primary">Qualität und Service: Entdecke die Alternative!</a>
+    </div>
+    <div class="alt-sec__media">
+      <img src="/assets/img/Ackmann_Techniker.jpg" alt="Ackermann Servicetechniker im Einsatz" loading="lazy">
+    </div>
+  </div>
+</section>"""
  + f'<section class="section section--muted"><div class="container">'
    + section_head("Produkte", "Alles fürs perfekte Spülergebnis")
    + f"""<div class="cards cards--2">
@@ -360,42 +407,109 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
          ("Innovationen","/ueber-uns/innovationen/","Durchdachte Technik für bessere Ergebnisse und Effizienz."),
          ("Nachhaltigkeit","/ueber-uns/nachhaltigkeit/","Extrem niedriger Wasser- und Energieverbrauch."),
        ],1)) + '</div></div></section>'
- + f'<section class="section section--dark"><div class="container">'
-   + section_head("Alle Andersmacher", "Lerne die ganze Bande kennen",
-       "Vom Hofcafé bis zur Metzgerei: Klick Dich durch alle Betriebe, die auf Ackermann setzen.", light=True)
-   + andersmacher_grid() + '</div></section>'
- + cta_band("Bereit für die Alternative im Premiumbereich?",
-     "Sprich mit uns – wir finden die passende Spüllösung für Deinen Betrieb."),
+ + """<section class="band-cta">
+  <div class="container band-cta__inner">
+    <img src="/assets/img/bee-light.png" alt="" class="band-cta__bee" aria-hidden="true">
+    <h2>Spülmaschinen für Andersmacher</h2>
+    <a href="/die-andersmacher/" class="btn btn--dark">Mehr erfahren</a>
+  </div>
+</section>
+<section class="section newsletter" id="newsletter">
+  <div class="container newsletter__inner">
+    <div class="newsletter__text">
+      <p class="eyebrow">Newsletter</p>
+      <h2>Bleib auf dem Laufenden</h2>
+      <p>Unser kostenloser Newsletter informiert Dich regelmäßig per E-Mail über Produktneuheiten
+      und Sonderaktionen. Deine Daten werden nur zur Personalisierung des Newsletters verwendet
+      und nicht an Dritte weitergegeben.</p>
+    </div>
+    <form class="newsletter__form" onsubmit="alert('Danke! Dies ist eine Demo-Anmeldung.');return false;">
+      <input type="email" placeholder="E-Mail" aria-label="E-Mail" required>
+      <div class="row">
+        <input type="text" placeholder="Vorname" aria-label="Vorname">
+        <input type="text" placeholder="Nachname" aria-label="Nachname">
+      </div>
+      <select aria-label="Betriebsart">
+        <option>Gastronomischer Betrieb</option>
+        <option>Fachhandel</option>
+        <option>Sonstiges</option>
+      </select>
+      <button type="submit" class="btn btn--primary">Anmelden</button>
+    </form>
+  </div>
+</section>""",
  "Ackermann Spülmaschinen GmbH aus Baindt: gewerbliche Spülmaschinen und Spülchemie für Gastronomie, Hotellerie, Catering, Bäckereien, Metzgereien und mobiles Spülen."))
 
-def solution_page(url, filename, eyebrow, h1, lead, body_extra=""):
+# flat lookup: slug -> (display name, use, image)
+MACHINE_BY_SLUG = {slug: (name, use, img)
+                   for items in MACHINES.values() for name, use, img, slug in items}
+
+def machine_cards(slugs):
+    cards = ""
+    for slug in slugs:
+        name, use, img = MACHINE_BY_SLUG[slug]
+        cards += f"""<a class="machine" href="/produkte/spuelmaschinen/{slug}/">
+  <div class="machine__media"><img src="/assets/img/machines/{img}" alt="{html.escape(name)}" loading="lazy"></div>
+  <h4>{html.escape(name)}</h4>
+  <p>{html.escape(use)}</p>
+  <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
+</a>"""
+    return f'<div class="cards cards--4 machine-row">{cards}</div>'
+
+def solution_page(url, filename, eyebrow, h1, lead, body_extra="", machines=None, extra_section=""):
+    if machines:
+        rec = ('<section class="section section--muted"><div class="container">'
+               + section_head("Passende Maschinen", "Unsere Empfehlung für Deine Branche",
+                   "Diese Modelle haben sich in Betrieben wie Deinem bewährt.")
+               + machine_cards(machines)
+               + '<div style="text-align:center;margin-top:2rem"><a class="btn btn--primary" href="/produkte/spuelmaschinen/">Alle Spülmaschinen ansehen</a></div>'
+               + '</div></section>')
+    else:
+        rec = ""
     b = (hero(eyebrow, h1, lead, cta=[("Jetzt beraten lassen", "/kontakt/", "btn--primary")], cls="hero--sub")
          + f'<section class="section"><div class="container prose">{body_extra}</div></section>'
-         + '<section class="section section--muted"><div class="container">'
-         + section_head("Passende Produkte", "Unsere Spülmaschinen")
-         + cards_solutions().replace("cards--4","cards--4") + '</div></section>'
+         + extra_section
+         + rec
          + cta_band("Fragen zu Deiner Branche?", "Wir beraten Dich persönlich und unverbindlich.", "Kontakt aufnehmen"))
     PAGES[url] = (filename, h1, page(url, h1, b, lead[:150]))
 
 solution_page("/gastronomie-und-hotellerie/", "gastronomie-und-hotellerie/index.html",
     "Lösungen für", "Gastronomie &amp; Hotellerie",
     "Wir machen das Spülen einfach.",
-    "<p>Spülmaschinen für die Gastronomie müssen zuverlässig laufen, hervorragende Ergebnisse liefern und dabei intuitiv und wartungsarm sein. Als Partner innovativer Cafés, Bars, Restaurants und Hotels schätzen unsere Kunden entweder unseren unschlagbaren Preis oder unseren außergewöhnlichen Service – und meistens beides.</p><p>Auch kleinere Betriebe erhalten bei uns die volle Aufmerksamkeit und Unterstützung. Denn wir sind einfach näher dran.</p>")
+    "<p>Spülmaschinen für die Gastronomie müssen zuverlässig laufen, hervorragende Ergebnisse liefern und dabei intuitiv und wartungsarm sein. Als Partner innovativer Cafés, Bars, Restaurants und Hotels schätzen unsere Kunden entweder unseren unschlagbaren Preis oder unseren außergewöhnlichen Service – und meistens beides.</p><p>Auch kleinere Betriebe erhalten bei uns die volle Aufmerksamkeit und Unterstützung. Denn wir sind einfach näher dran.</p>",
+    machines=["u-440", "u-540-bistro", "u-540e", "h-540e", "h-540e-klima-plus", "h-640", "h-640-klima-plus", "f-720"])
 
 solution_page("/gemeinschaftsverpflegung-und-catering/", "gemeinschaftsverpflegung-und-catering/index.html",
     "Lösungen für", "Catering und Gemeinschaftsverpflegung",
     "Spültechnik, mit der man rechnen kann.",
-    "<p>Von der Kita-Küche bis zum großen Hochzeits-Event: So unterschiedlich die Einsätze, so vielseitig muss die Spültechnik sein – und in kurzer Zeit ganz verschiedenes Spülgut bewältigen.</p><p>Profis rechnen mit den kompletten Lebenszykluskosten: Anschaffungspreis, Wartung, Verbrauch und Ersatzteile. Genau hier punkten wir mit robuster Premium-Qualität zu fairen Preisen und starkem Service.</p>")
+    "<p>Von der Kita-Küche bis zum großen Hochzeits-Event: So unterschiedlich die Einsätze, so vielseitig muss die Spültechnik sein – und in kurzer Zeit ganz verschiedenes Spülgut bewältigen.</p><p>Profis rechnen mit den kompletten Lebenszykluskosten: Anschaffungspreis, Wartung, Verbrauch und Ersatzteile. Genau hier punkten wir mit robuster Premium-Qualität zu fairen Preisen und starkem Service.</p>",
+    machines=["h-640", "kt-1", "kt-2", "kt-2-plus"])
 
 solution_page("/baeckereien-und-metzgereien/", "baeckereien-und-metzgereien/index.html",
     "Lösungen für", "Heiß und fettig? Mit uns bleibst Du cool",
     "Meister der Vielfalt für Bäckereien und Metzgereien.",
-    "<p>Bäckereien und Metzgereien sind heute oft fast schon kleine Bistros. Die heiße Theke hat Konjunktur. Damit steigen auch die Anforderungen an die Spültechnik. Die Hygiene bleibt das A und O, zudem aber müssen Spülmaschinen in diesen Branchen Meister der Vielfalt sein.</p><p>Von fettigen Blechen über empfindliches Geschirr bis zu Behältern – und das alles auf begrenztem Raum. Unsere Geräte überzeugen bei Leistung und Wirtschaftlichkeit gleichermaßen.</p>")
+    "<p>Bäckereien und Metzgereien sind heute oft fast schon kleine Bistros. Die heiße Theke hat Konjunktur. Damit steigen auch die Anforderungen an die Spültechnik. Die Hygiene bleibt das A und O, zudem aber müssen Spülmaschinen in diesen Branchen Meister der Vielfalt sein.</p><p>Von fettigen Blechen über empfindliches Geschirr bis zu Behältern – und das alles auf begrenztem Raum. Unsere Geräte überzeugen bei Leistung und Wirtschaftlichkeit gleichermaßen.</p>",
+    machines=["u-640e", "h-640", "f-920"])
 
 solution_page("/ausser-haus-und-mobiles-spuelen/", "ausser-haus-und-mobiles-spuelen/index.html",
     "Lösungen für", "Außer Haus und mobiles Spülen",
     "So einfach war mobiles Spülen noch nie.",
-    "<p>Beim Außerhaus-Catering, auf Festen oder auf Marktplätzen: Die Ansprüche an die Bewirtung und Logistik steigen, und auch die Hygienevorschriften werden immer anspruchsvoller.</p><p>Mit dem Spülmobil erfüllst Du nicht nur alle Vorschriften, sondern gewinnst maximale Flexibilität für unterschiedliche Einsatzorte. Anschluss an Strom und Wasser genügt – und los geht's.</p>")
+    "<p>Beim Außerhaus-Catering, auf Festen oder auf Marktplätzen: Die Ansprüche an die Bewirtung und Logistik steigen, und auch die Hygienevorschriften werden immer anspruchsvoller.</p><p>Mit dem Spülmobil erfüllst Du nicht nur alle Vorschriften, sondern gewinnst maximale Flexibilität für unterschiedliche Einsatzorte. Anschluss an Strom und Wasser genügt – und los geht's.</p>",
+    extra_section="""<section class="section section--dark alt-sec">
+  <div class="container alt-sec__inner">
+    <div class="alt-sec__text">
+      <p class="eyebrow eyebrow--light">Unsere Lösung</p>
+      <h2>Das Spülmobil</h2>
+      <p>Die komplette Spülküche auf Rädern: Das Spülmobil bringt professionelle Spültechnik
+      dorthin, wo gefeiert wird. Strom- und Wasseranschluss genügen – und schon spülst Du
+      auch draußen auf Profi-Niveau, hygienisch einwandfrei und vorschriftenkonform.</p>
+      <a href="/kontakt/" class="btn btn--primary">Spülmobil anfragen</a>
+    </div>
+    <div class="alt-sec__media">
+      <img src="/assets/img/spuelmobil.jpg" alt="Das Ackermann Spülmobil im Einsatz" loading="lazy">
+    </div>
+  </div>
+</section>""")
 
 # PRODUCTS – Spülmaschinen
 PAGES["/produkte/spuelmaschinen/"] = ("produkte/spuelmaschinen/index.html", "Spülmaschinen", page(
@@ -407,22 +521,37 @@ PAGES["/produkte/spuelmaschinen/"] = ("produkte/spuelmaschinen/index.html", "Sp�
  + cta_band("Welche Maschine passt zu Deinem Betrieb?", "Wir beraten Dich gern und finden die passende Lösung."),
  "Untertisch-, Hauben-, Geräte- und Korbtransportspülmaschinen von Ackermann."))
 
-# PRODUCTS – Spülchemie
-chem_cards = "".join(
-    f'<div class="card"><h3>{html.escape(cat)}</h3><ul class="chem-list">' +
-    "".join(f'<li>{html.escape(x)}</li>' for x in items) + '</ul></div>'
-    for cat, items in CHEMIE.items())
+# PRODUCTS – Spülchemie (full product cards with image + datasheet)
+def chemie_grid():
+    out = []
+    groups = []
+    for name, group, desc, img, pdf in CHEMIE_PRODUCTS:
+        if group not in groups:
+            groups.append(group)
+    for g in groups:
+        cards = ""
+        for name, group, desc, img, pdf in CHEMIE_PRODUCTS:
+            if group != g:
+                continue
+            btn = (f'<a class="chem-card__pdf" href="/assets/datasheets/{pdf}" target="_blank" rel="noopener">Datenblatt (PDF)</a>'
+                   if pdf else '<span class="chem-card__pdf chem-card__pdf--none">Datenblatt auf Anfrage</span>')
+            cards += f"""<div class="chem-card">
+  <div class="chem-card__media"><img src="/assets/img/chemie/{img}" alt="{html.escape(name)}" loading="lazy"></div>
+  <h4>{html.escape(name)}</h4>
+  <p>{html.escape(desc)}</p>
+  {btn}
+</div>"""
+        out.append(f'<h3 class="machine-cat">{html.escape(g)}</h3><div class="cards cards--4 machine-row">{cards}</div>')
+    return "\n".join(out)
+
 PAGES["/produkte/spuelchemie/"] = ("produkte/spuelchemie/index.html", "Spülchemie", page(
  "/produkte/spuelchemie/", "Spülchemie",
  hero("Produkte", "Unsere Spülchemie",
       "Reiniger, Klarspüler und Pflegemittel – passgenau abgestimmt auf unsere Maschinen für glänzende Ergebnisse bei minimalem Verbrauch.",
       cta=[("Beratung anfragen","/kontakt/","btn--primary")], cls="hero--sub")
- + '<section class="section"><div class="container">'
-   + section_head("Sortiment", "Für jedes Spülgut die richtige Chemie",
-       "Unsere Reiniger sind zur Anwendung in gewerblichen Gläser- und Geschirrspülmaschinen formuliert. Klarspüler mit gutem Benetzungsvermögen und schaumreduzierender Wirkung sorgen für streifenfreien Glanz.")
-   + f'<div class="cards cards--4">{chem_cards}</div></div></section>'
+ + '<section class="section"><div class="container">' + chemie_grid() + '</div></section>'
  + cta_band("Fragen zur richtigen Dosierung?", "Wir helfen Dir, Verbrauch und Ergebnis optimal einzustellen."),
- "Reiniger, Klarspüler, Entkalker und Regeneriersalz von Ackermann Spülmaschinen."))
+ "Reiniger, Klarspüler, Entkalker und Regeneriersalz von Ackermann Spülmaschinen – mit Datenblättern."))
 
 # ÜBER UNS
 PAGES["/ueber-uns/"] = ("ueber-uns/index.html", "Über uns", page(
@@ -599,6 +728,46 @@ legal("/impressum/", "impressum/index.html", "Impressum", [
   "<h2>Registereintrag</h2><p>Amtsgericht Ulm, HRB 632024</p>",
   "<p class='muted-note'>Hinweis: Dies ist eine originalgetreue Nachbildung. Bitte die vollständigen Pflichtangaben (USt-IdNr., verantwortlich i.S.d. Presserechts u.&nbsp;a.) vor Veröffentlichung ergänzen.</p>",
 ])
+# DOWNLOADBEREICH – all datasheets in one place (like the official site)
+MACHINE_DOWNLOADS = [
+    ("U 430-2", "Datenblatt-U-430-1.pdf"), ("U 440", "Datenblatt-U-440.pdf"),
+    ("U 530-2 / U 530-2E", "Datenblatt-U-530-1-U-530-1E.pdf"), ("U 540 Bistro", "Datenblatt-U-540-Bistro.pdf"),
+    ("U 540 / U 540E", "Datenblatt-U-540-U-540E.pdf"), ("U 640 / U 640E", "Datenblatt-U-640-U-640E.pdf"),
+    ("H 530-2 / H 530-2E", "Datenblatt-H530-1-und-H530-1E.pdf"), ("H 540 / H 540E", "Datenblatt-H-540-H-540E.pdf"),
+    ("H 540 Klima+ / H 540E Klima+", "Datenblatt-H540KlimaPlus-H540EKlimaPlus.pdf"),
+    ("H 640", "Datenblatt-H640.pdf"), ("H 640 Klima+", "Datenblatt-H640KlimaPlus.pdf"),
+    ("F 720", "Datenblatt-F720.pdf"), ("F 920", "Datenblatt-F-920.pdf"),
+    ("KT-1 / KT-2", "Datenblatt_KT_1_KT_2_2024.pdf"),
+    ("KT-1 Plus / KT-2 Plus", "Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf"),
+]
+CHEMIE_DOWNLOADS = [(n, p) for n, g, d, i, p in CHEMIE_PRODUCTS if p]
+
+def dl_list(items):
+    rows = "".join(
+        f'<li><span>{html.escape(n)}</span>'
+        f'<a class="btn btn--primary btn--sm" href="/assets/datasheets/{p}" target="_blank" rel="noopener">⭳ PDF</a></li>'
+        for n, p in items)
+    return f'<ul class="dl-list">{rows}</ul>'
+
+PAGES["/downloadbereich/"] = ("downloadbereich/index.html", "Downloadbereich", page(
+ "/downloadbereich/", "Downloadbereich",
+ hero("Service", "Downloadbereich",
+      "Alle Datenblätter unserer Spülmaschinen und Spülchemie als PDF – zum Ansehen und Herunterladen.",
+      cls="hero--sub")
+ + '<section class="section"><div class="container dl-cols">'
+   + f'<div><h3 class="machine-cat">Spülmaschinen</h3>{dl_list(MACHINE_DOWNLOADS)}</div>'
+   + f'<div><h3 class="machine-cat">Spülchemie</h3>{dl_list(CHEMIE_DOWNLOADS)}</div>'
+ + '</div></section>'
+ + cta_band("Fehlt Dir ein Dokument?", "Schreib uns – wir schicken Dir alles Nötige zu.", "Kontakt aufnehmen"),
+ "Datenblätter aller Ackermann Spülmaschinen und Spülchemie-Produkte als PDF-Download."))
+
+legal("/cookie-richtlinie-eu/", "cookie-richtlinie-eu/index.html", "Cookie-Richtlinie (EU)", [
+  "<p>Diese Website verwendet Cookies und ähnliche Technologien, um grundlegende Funktionen bereitzustellen und – nur mit Deiner Einwilligung – Statistik- und Marketingzwecke zu unterstützen.</p>",
+  "<h2>Kategorien</h2><p><strong>Funktional:</strong> für den Betrieb der Website erforderlich.<br><strong>Vorlieben:</strong> speichern Deine Einstellungen.<br><strong>Statistiken:</strong> anonyme Auswertung der Nutzung.<br><strong>Marketing:</strong> nur mit ausdrücklicher Zustimmung.</p>",
+  "<h2>Einwilligung verwalten</h2><p>Du kannst Deine Einwilligung jederzeit anpassen oder widerrufen. Details zur Verarbeitung findest Du in unserer <a href='/datenschutz/'>Datenschutzerklärung</a>.</p>",
+  "<p class='muted-note'>Hinweis: Platzhalter-Richtlinie für die Nachbildung. Vor Veröffentlichung durch die vollständige, rechtssichere Fassung ersetzen.</p>",
+])
+
 legal("/datenschutz/", "datenschutz/index.html", "Datenschutz", [
   "<p>Der Schutz Deiner persönlichen Daten ist uns wichtig. Wir verarbeiten personenbezogene Daten ausschließlich im Rahmen der gesetzlichen Bestimmungen (DSGVO, BDSG).</p>",
   "<h2>Verantwortlicher</h2><p>Ackermann Spülmaschinen GmbH, Am Umspannwerk 18, 88255 Baindt, info@ackermann-spuelmaschinen.de</p>",
@@ -613,6 +782,39 @@ legal("/datenschutz/", "datenschutz/index.html", "Datenschutz", [
 # authoritative source ("Alle Angaben laut offiziellem Datenblatt").
 _F = "Doppelwandige Edelstahl-Konstruktion für leisen, langlebigen Betrieb"
 MACHINE_DETAIL = {
+ "u-430-2": dict(name="U 430-2", series="Untertisch · Gläser & Bistro", img="U-430-2.png",
+   pdf="/assets/datasheets/Datenblatt-U-430-1.pdf",
+   tagline="Die kompakte Gläser- und Bistrospülmaschine für Körbe 400 × 400 mm.",
+   intro=["Die U 430-2 ist der platzsparende Einstieg in die Ackermann-Welt: gebaut für Bars und Cafés, in denen jeder Zentimeter zählt.",
+          "Einfach zu bedienen, robust im Alltag und sparsam im Verbrauch – ganz ohne Schnickschnack."],
+   highlights=[("400 × 400 mm","Korbgröße"),("40","Körbe / Stunde"),("230 V","Stromanschluss"),("3,4 kW","Anschlusswert")],
+   specs=[("Korbgröße","400 × 400 mm"),("Theor. Stundenleistung","40 Körbe/h"),("Einfahrhöhe","300 mm"),
+          ("Max. Glashöhe","275 mm"),("Höhe mit geöffneter Türe","885 mm"),("Stromanschluss","230 V / 50 Hz"),
+          ("Gesamtanschlusswert","3,4 kW"),("Absicherung","16 A"),("Tanktemperatur","60–65 °C")],
+   features=[_F,"Extrem kompakte Stellfläche","Anschluss an normale 230-V-Steckdose","Ideal für Gläser und Bistrogeschirr","Einfachste Bedienung – robust statt Schnickschnack"]),
+ "u-530-2": dict(name="U 530-2 / U 530-2E", series="Untertisch-Geschirrspülmaschine", img="U-530-2.png",
+   pdf="/assets/datasheets/Datenblatt-U-530-1-U-530-1E.pdf",
+   tagline="Untertischspülmaschine für Gläser und Geschirr – Körbe 500 × 500 mm.",
+   intro=["Die U 530-2 ist die vielseitige Untertischmaschine für Gläser und Geschirr. Mit 330 mm Glashöhe nimmt sie auch hohe Gläser problemlos auf.",
+          "Der umschaltbare Anschlusswert macht sie flexibel: volle Leistung am 400-V-Anschluss oder reduzierter Betrieb, wo nur 230 V verfügbar sind. Als E-Modell mit eingebautem Wasserenthärter."],
+   highlights=[("500 × 500 mm","Korbgröße"),("40","Körbe / Stunde"),("330 mm","max. Glashöhe"),("6,8 kW","Anschlusswert")],
+   specs=[("Korbgröße","500 × 500 mm"),("Theor. Stundenleistung","40 Körbe/h"),("Max. Glashöhe","330 mm"),
+          ("Höhe mit geöffneter Türe","1.005 mm"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Gesamtanschlusswert","6,8 kW (umschaltbar 3,4 kW)"),("Absicherung","16 A"),
+          ("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=[_F,"Umschaltbarer Anschlusswert (400 V / 230 V)","330 mm Glashöhe für hohe Gläser","Große 500 × 500 mm Körbe","E-Variante mit eingebautem Wasserenthärter"]),
+ "h-530-2": dict(name="H 530-2 / H 530-2E", series="Haubenspülmaschine", img="H-530-2.png",
+   pdf="/assets/datasheets/Datenblatt-H530-1-und-H530-1E.pdf",
+   tagline="Die kompakte Haubenspülmaschine für den Einstieg ins Durchschub-Spülen.",
+   intro=["Die H 530-2 bringt das Hauben-Prinzip in kompakter Form in Deine Küche: aufrechtes Arbeiten, schnelle Korbwechsel und konstante Ergebnisse.",
+          "Ideal für Betriebe, die vom Untertisch-Format aufsteigen wollen – als E-Modell mit eingebautem Wasserenthärter."],
+   highlights=[("500 × 500 mm","Korbgröße"),("40","Körbe / Stunde"),("440 mm","Einfahrhöhe"),("2.010 mm","Höhe offene Haube")],
+   specs=[("Korbgröße","500 × 500 mm"),("Theor. Stundenleistung","40 Körbe/h"),("Einfahrhöhe","440 mm"),
+          ("Höhe mit geöffneter Haube","2.010 mm"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Boilerleistung","7.000 W"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=[_F,"Kompaktes Hauben-Format – aufrechtes Arbeiten","440 mm Einfahrhöhe","Ideal für den Einstieg ins Durchschub-Spülen","E-Variante mit eingebautem Wasserenthärter"]),
  "u-440": dict(name="U 440", series="Untertisch · Gläser & Bistro", img="U-440.png",
    pdf="/assets/datasheets/Datenblatt-U-440.pdf",
    tagline="Kompakte Gläser- und Bistrospülmaschine für Körbe 400 × 400 mm.",
@@ -633,7 +835,7 @@ MACHINE_DETAIL = {
           ("Gesamtanschlusswert","7,9 kW"),("Absicherung","16 A"),("Tankinhalt","15 l"),("Tanktemperatur","60–65 °C"),
           ("Boilerinhalt","6 l"),("Leistung Umwälzpumpe","470 W"),("Gehäuse doppelwandig","ja")],
    features=[_F,"Großer 500 × 500 mm Korb für Gläser und Geschirr","Wahlweise 400-V- oder 230-V-Anschluss","Kräftige Umwälzpumpe für konstante Ergebnisse","Geringer Wasser- und Energieverbrauch"]),
- "u-540e": dict(name="U 540E", series="Untertisch-Geschirrspülmaschine", img="U-540E.png",
+ "u-540e": dict(name="U 540 / U 540E", series="Untertisch-Geschirrspülmaschine", img="U-540E.png",
    pdf="/assets/datasheets/Datenblatt-U-540-U-540E.pdf",
    tagline="Untertisch-Geschirrspülmaschine für Körbe 500 × 500 mm – mit eingebautem Wasserenthärter.",
    intro=["Die U 540E ist die Geschirrspülmaschine für den anspruchsvollen Alltag. Mit 385 mm Einfahrhöhe nimmt sie auch höheres Geschirr auf.",
@@ -644,7 +846,7 @@ MACHINE_DETAIL = {
           ("Tankinhalt","15 l"),("Tanktemperatur","60–65 °C"),("Boilerinhalt","6 l"),("Leistung Umwälzpumpe","470 W")],
    e_note="E-Modell: mit eingebautem Wasserenthärter",
    features=[_F,"Eingebauter Wasserenthärter für kalkfreie Ergebnisse","385 mm Einfahrhöhe – auch für höheres Geschirr","Große 500 × 500 mm Körbe","Effizient bei Wasser und Energie"]),
- "u-640e": dict(name="U 640E", series="Untertisch · Geschirr & Gerätschaften", img="U-640E.png",
+ "u-640e": dict(name="U 640 / U 640E", series="Untertisch · Geschirr & Gerätschaften", img="U-640E.png",
    pdf="/assets/datasheets/Datenblatt-U-640-U-640E.pdf",
    tagline="Die größte Untertisch – auch für Tabletts und Gerätschaften.",
    intro=["Die U 640E ist unsere leistungsstärkste Untertischmaschine: Sie bewältigt Geschirr, Tabletts (bis 600 × 400 mm / EN 4) und Gerätschaften gleichermaßen.",
@@ -655,7 +857,7 @@ MACHINE_DETAIL = {
           ("Tankinhalt","25 l"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C"),("Leistung Umwälzpumpe","700 W")],
    e_note="E-Modell: mit eingebautem Wasserenthärter",
    features=[_F,"Auch für Tabletts (EN 4) und Gerätschaften","Eingebauter Wasserenthärter","Großer 25-l-Tank für konstante Leistung","Höchste Kapazität im Untertisch-Format"]),
- "h-540e": dict(name="H 540E", series="Haubenspülmaschine", img="H-540E.png",
+ "h-540e": dict(name="H 540 / H 540E", series="Haubenspülmaschine", img="H-540E.png",
    pdf="/assets/datasheets/Datenblatt-H-540-H-540E.pdf",
    tagline="Durchschub-Haubenmaschine mit hoher Leistung für den Dauerbetrieb.",
    intro=["Die H 540E ist die klassische Haubenspülmaschine für mittlere bis große Betriebe. Bis zu 60 Körbe pro Stunde und 460 mm Einfahrhöhe meistern jeden Ansturm.",
@@ -666,7 +868,7 @@ MACHINE_DETAIL = {
           ("Tankinhalt","22 l"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
    e_note="E-Modell: mit eingebautem Wasserenthärter",
    features=[_F,"Bis 60 Körbe/h – für den Dauerbetrieb","460 mm Einfahrhöhe für hohes Spülgut","Ideal für Spülstraßen (Durchschub)","Eingebauter Wasserenthärter"]),
- "h-540e-klima-plus": dict(name="H 540E Klima+", series="Haubenspülmaschine · Klima+", img="H-540E-Klima-Plus.png",
+ "h-540e-klima-plus": dict(name="H 540 Klima+ / H 540E Klima+", series="Haubenspülmaschine · Klima+", img="H-540E-Klima-Plus.png",
    pdf="/assets/datasheets/Datenblatt-H540KlimaPlus-H540EKlimaPlus.pdf",
    tagline="Haubenmaschine mit Wärmerückgewinnung – weniger Energie, weniger Wrasen.",
    intro=["Die Klima+-Variante der H 540E bringt eine integrierte Wärmerückgewinnung mit: Die Abwärme wird genutzt, um Frischwasser vorzuwärmen. Das spart Energie und reduziert den Wrasen beim Öffnen der Haube deutlich.",
