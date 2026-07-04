@@ -97,7 +97,7 @@ def page(active, title, body, description=""):
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <img src="/assets/img/ackermann-biene-footer.png" alt="" class="footer__bee">
+      <img src="/assets/img/bee-light.png" alt="Ackermann Biene" class="footer__bee">
       <p class="footer__claim">Einfach näher dran:<br>Spülmaschinen für Andersmacher.</p>
       <p class="footer__addr">Ackermann Spülmaschinen GmbH<br>Am Umspannwerk 18<br>88255 Baindt</p>
     </div>
@@ -265,23 +265,15 @@ STORY_SLIDES = [
 ]
 
 def story_slider():
-    slides = ""
+    photos = ""
     dots = ""
     for i, (name, branche, img, quote, url) in enumerate(STORY_SLIDES):
         active = " is-active" if i == 0 else ""
-        slides += f"""<article class="story-slide{active}" data-index="{i}">
-      <div class="story-slide__media">
-        <img src="/assets/img/{img}" alt="{html.escape(name)}" loading="lazy">
-        <span class="story-badge">Andersmacher</span>
-      </div>
-      <div class="story-slide__panel">
-        <div class="story-quote-mark">&ldquo;</div>
-        <blockquote>{html.escape(quote)}</blockquote>
-        <div class="story-meta"><strong>{html.escape(name)}</strong><span>{html.escape(branche)}</span></div>
-        <a href="{url}" class="story-link">Ganze Story lesen &rarr;</a>
-      </div>
-    </article>"""
+        photos += f"""<img class="story-photo{active}" src="/assets/img/{img}" alt="{html.escape(name)}"
+          data-name="{html.escape(name)}" data-branche="{html.escape(branche)}"
+          data-quote="{html.escape(quote)}" data-url="{url}" loading="lazy">"""
         dots += f'<button class="story-dot{active}" data-go="{i}" aria-label="Story {i+1}"></button>'
+    first = STORY_SLIDES[0]
     return f"""<section class="story" id="stories">
   <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--1" aria-hidden="true">
   <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--2" aria-hidden="true">
@@ -291,14 +283,21 @@ def story_slider():
       <h2>Echte Betriebe, die anders spülen</h2>
       <p class="section__sub">Kleine Geschichten von Kundinnen und Kunden, die auf Ackermann setzen.</p>
     </div>
-    <div class="story-slider">
-      <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
-      <div class="story-track">
-        {slides}
+    <div class="story-stage">
+      <div class="story-frame">
+        {photos}
+        <div class="story-shade"></div>
+        <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
+        <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
+        <div class="story-caption">
+          <span class="story-badge">Andersmacher</span>
+          <blockquote id="story-quote">{html.escape(first[3])}</blockquote>
+          <div class="story-meta"><strong id="story-name">{html.escape(first[0])}</strong><span id="story-branche">{html.escape(first[1])}</span></div>
+          <a id="story-link" href="{first[4]}" class="story-link">Ganze Story lesen &rarr;</a>
+        </div>
       </div>
-      <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
+      <div class="story-dots">{dots}</div>
     </div>
-    <div class="story-dots">{dots}</div>
   </div>
 </section>"""
 

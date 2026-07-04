@@ -1,26 +1,36 @@
-// Customer-story slider
+// Customer-story slider: one frame, images cross-fade, caption updates
 (function () {
-  const slider = document.querySelector('.story-slider');
-  if (!slider) return;
-  const slides = Array.from(slider.querySelectorAll('.story-slide'));
-  const dots = Array.from(document.querySelectorAll('.story-dot'));
   const story = document.querySelector('.story');
+  if (!story) return;
+  const photos = Array.from(story.querySelectorAll('.story-photo'));
+  const dots = Array.from(story.querySelectorAll('.story-dot'));
+  const quote = story.querySelector('#story-quote');
+  const name = story.querySelector('#story-name');
+  const branche = story.querySelector('#story-branche');
+  const link = story.querySelector('#story-link');
+  if (photos.length < 2) return;
   let i = 0, timer;
 
   function show(n) {
-    i = (n + slides.length) % slides.length;
-    slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+    i = (n + photos.length) % photos.length;
+    photos.forEach((p, k) => p.classList.toggle('is-active', k === i));
     dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+    const p = photos[i].dataset;
+    if (quote) quote.textContent = p.quote;
+    if (name) name.textContent = p.name;
+    if (branche) branche.textContent = p.branche;
+    if (link) link.href = p.url;
   }
   function next() { show(i + 1); }
   function prev() { show(i - 1); }
   function start() { stop(); timer = setInterval(next, 5500); }
   function stop() { if (timer) clearInterval(timer); }
 
-  slider.querySelector('.story-arrow--next').addEventListener('click', () => { next(); start(); });
-  slider.querySelector('.story-arrow--prev').addEventListener('click', () => { prev(); start(); });
+  story.querySelector('.story-arrow--next').addEventListener('click', () => { next(); start(); });
+  story.querySelector('.story-arrow--prev').addEventListener('click', () => { prev(); start(); });
   dots.forEach((d) => d.addEventListener('click', () => { show(+d.dataset.go); start(); }));
-  if (story) { story.addEventListener('mouseenter', stop); story.addEventListener('mouseleave', start); }
+  story.addEventListener('mouseenter', stop);
+  story.addEventListener('mouseleave', start);
   start();
 })();
 
