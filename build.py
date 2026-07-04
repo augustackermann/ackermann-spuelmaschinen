@@ -552,11 +552,18 @@ legal("/datenschutz/", "datenschutz/index.html", "Datenschutz", [
 ])
 
 # ---------------------------------------------------------------- write
+# BASE_PATH lets the same source deploy at a sub-path (GitHub Pages project site)
+# or at root (local server). All internal refs start with ="/ ; external ones
+# start with ="http, ="tel:, ="mailto:, ="# and are left untouched.
+BASE = os.environ.get("BASE_PATH", "").rstrip("/")
+
 count = 0
 for url, (filename, title, content) in PAGES.items():
+    if BASE:
+        content = content.replace('="/', f'="{BASE}/')
     path = os.path.join(ROOT, filename)
     os.makedirs(os.path.dirname(path) or ROOT, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
     count += 1
-print(f"Wrote {count} pages.")
+print(f"Wrote {count} pages (BASE_PATH='{BASE}').")
