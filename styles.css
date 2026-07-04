@@ -89,6 +89,76 @@ img { max-width: 100%; display: block; }
 .hero__media { display: grid; place-items: center; }
 .hero__media img { max-height: 380px; width: auto; filter: drop-shadow(0 24px 40px rgba(0,0,0,.4)); border-radius: 12px; }
 
+/* ===== playful customer-story slider ===== */
+.story {
+  position: relative;
+  padding: 4.5rem 0 4rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(0,144,160,.08), transparent 30%),
+    radial-gradient(circle at 88% 80%, rgba(0,144,160,.08), transparent 30%),
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 22px, rgba(0,144,160,.02) 22px 23px),
+    var(--white);
+}
+.story__bee { position: absolute; width: 66px; opacity: .28; pointer-events: none; }
+.story__bee--1 { top: 8%; left: 4%; animation: bee-float 6s ease-in-out infinite; }
+.story__bee--2 { bottom: 10%; right: 5%; width: 90px; opacity: .18; animation: bee-float 8s ease-in-out infinite reverse; }
+@keyframes bee-float { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-16px) rotate(4deg); } }
+
+.story-slider { position: relative; display: flex; align-items: center; gap: .5rem; }
+.story-track { position: relative; flex: 1; min-height: 380px; }
+.story-slide {
+  position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  align-items: center; opacity: 0; visibility: hidden; transform: translateY(18px) scale(.98);
+  transition: opacity .5s ease, transform .5s ease, visibility .5s;
+}
+.story-slide.is-active { opacity: 1; visibility: visible; transform: none; position: relative; }
+.story-slide__media { position: relative; }
+.story-slide__media img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  border-radius: 42% 58% 58% 42% / 52% 48% 52% 48%;
+  box-shadow: var(--shadow-md); border: 6px solid #fff;
+}
+.story-badge {
+  position: absolute; top: 14px; left: 14px; background: var(--teal); color: #fff;
+  font-family: "Poppins",sans-serif; font-weight: 700; font-size: .74rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .4rem .9rem; border-radius: 999px; box-shadow: var(--shadow-sm);
+  transform: rotate(-4deg);
+}
+.story-slide__panel { position: relative; }
+.story-quote-mark { font-family: "Poppins",sans-serif; font-size: 5rem; line-height: .6; color: var(--teal); opacity: .25; }
+.story-slide__panel blockquote {
+  margin: .3rem 0 1.4rem; font-family: "Poppins",sans-serif; font-weight: 600;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem); color: var(--ink); line-height: 1.3;
+}
+.story-meta { display: flex; flex-direction: column; margin-bottom: 1.2rem; }
+.story-meta strong { font-size: 1.15rem; color: var(--teal-dark); font-family: "Poppins",sans-serif; }
+.story-meta span { color: var(--slate); font-size: .92rem; }
+.story-link { font-weight: 600; color: var(--teal); }
+.story-link:hover { color: var(--teal-dark); }
+
+.story-arrow {
+  flex: 0 0 auto; width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+  background: #fff; color: var(--teal); font-size: 1.6rem; line-height: 1; box-shadow: var(--shadow-md);
+  transition: transform .15s, background .15s, color .15s; z-index: 2;
+}
+.story-arrow:hover { background: var(--teal); color: #fff; transform: scale(1.1); }
+.story-dots { display: flex; justify-content: center; gap: .6rem; margin-top: 1.8rem; }
+.story-dot { width: 11px; height: 11px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(0,144,160,.25); transition: transform .2s, background .2s; padding: 0; }
+.story-dot.is-active { background: var(--teal); transform: scale(1.3); }
+
+@media (max-width: 800px) {
+  .story-slide { grid-template-columns: 1fr; gap: 1.2rem; text-align: center; }
+  .story-slide__media img { aspect-ratio: 16/10; }
+  .story-quote-mark { display: none; }
+  .story-meta { align-items: center; }
+  .story-arrow { position: absolute; top: 34%; }
+  .story-arrow--prev { left: -6px; }
+  .story-arrow--next { right: -6px; }
+  .story-track { min-height: 0; }
+}
+
 /* stats */
 .stats { margin-top: -2.4rem; position: relative; z-index: 5; }
 .stats__grid { background: #fff; border: 1px solid var(--line); border-radius: var(--radius);

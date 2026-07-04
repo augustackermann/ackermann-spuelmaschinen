@@ -59,7 +59,8 @@ def page(active, title, body, description=""):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html.escape(title)} | Ackermann Spülmaschinen</title>
 <meta name="description" content="{html.escape(description)}">
-<link rel="icon" href="/assets/img/ackermann-logo-mobile.png">
+<link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/bee-teal.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -248,6 +249,59 @@ def andersmacher_grid():
         c += f'<a class="ref" href="{url}"><div class="ref__media">{media}</div><span class="ref__name">{html.escape(name)}</span></a>'
     return f'<div class="cards cards--4 refs">{c}</div>'
 
+STORY_SLIDES = [
+    ("Härle's Hofcafé", "Hofcafé · Bodensee", "Ackermann_Haerle_Slider-3.jpg",
+     "Mit so wenig Wasser so sauber spülen – das hat uns sofort überzeugt.", "/die-andersmacher/haerles-hofcafe/"),
+    ("Metzgerei Kutter", "Metzgerei", "metzgerei-kutter-slider.jpg",
+     "Unschlagbar in Preis und Leistung – und einfach immer zuverlässig.", "/die-andersmacher/metzgerei-kutter/"),
+    ("Max.Café", "Café & Rösterei", "Ackermann_Max_Cafe_2.jpg",
+     "Verlässliche Technik, die jeden Ansturm im Service mitmacht.", "/die-andersmacher/max-cafe/"),
+    ("Pier 40", "Gastronomie am Wasser", "Ackermann-Spuelmaschinen-Pier40-Slider.jpg",
+     "Endlich Service, der schnell da ist, wenn es drauf ankommt.", "/die-andersmacher/pier-40/"),
+    ("Haus Nazareth", "Gemeinschaftsverpflegung", "HausNazareth_Ackermann_Spuelmaschinen-Slider.jpg",
+     "Große Küche, viele Essen am Tag – auf die Maschine ist Verlass.", "/die-andersmacher/haus-nazareth/"),
+    ("Hirscheck", "Gastronomie", "Hirscheck_12.jpg",
+     "Neu dabei und überzeugt von der Alternative im Premiumbereich.", "/die-andersmacher/hirscheck/"),
+]
+
+def story_slider():
+    slides = ""
+    dots = ""
+    for i, (name, branche, img, quote, url) in enumerate(STORY_SLIDES):
+        active = " is-active" if i == 0 else ""
+        slides += f"""<article class="story-slide{active}" data-index="{i}">
+      <div class="story-slide__media">
+        <img src="/assets/img/{img}" alt="{html.escape(name)}" loading="lazy">
+        <span class="story-badge">Andersmacher</span>
+      </div>
+      <div class="story-slide__panel">
+        <div class="story-quote-mark">&ldquo;</div>
+        <blockquote>{html.escape(quote)}</blockquote>
+        <div class="story-meta"><strong>{html.escape(name)}</strong><span>{html.escape(branche)}</span></div>
+        <a href="{url}" class="story-link">Ganze Story lesen &rarr;</a>
+      </div>
+    </article>"""
+        dots += f'<button class="story-dot{active}" data-go="{i}" aria-label="Story {i+1}"></button>'
+    return f"""<section class="story" id="stories">
+  <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--1" aria-hidden="true">
+  <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--2" aria-hidden="true">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">Die Andersmacher</p>
+      <h2>Echte Betriebe, die anders spülen</h2>
+      <p class="section__sub">Kleine Geschichten von Kundinnen und Kunden, die auf Ackermann setzen.</p>
+    </div>
+    <div class="story-slider">
+      <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
+      <div class="story-track">
+        {slides}
+      </div>
+      <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
+    </div>
+    <div class="story-dots">{dots}</div>
+  </div>
+</section>"""
+
 def stats_strip():
     stats = [("Top 5", "Systemanbieter der Branche"),
              ("min.", "Wasser- &amp; Energieverbrauch"),
@@ -273,7 +327,8 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
       "Ob Gastronomie, Hotellerie, Gemeinschaftsverpflegung, Bäckereien und Metzgereien oder mobiles Spülen auf Feiern und Festen – wir liefern das beste Preis-Leistungs-Verhältnis im Premiumbereich, erstklassigen Service und nachhaltige Lösungen mit extrem niedrigem Wasserverbrauch.",
       cta=[("Entdecke unsere Lösungen", "/#loesungen", "btn--primary"),
            ("Warum Ackermann?", "/ueber-uns/", "btn--ghost")],
-      img="/assets/img/machines/H-640.png")
+      img="/assets/img/machines/H-640.png", cls="hero--home")
+ + story_slider()
  + stats_strip()
  + f'<section class="section" id="loesungen"><div class="container">'
    + section_head("Lösungen für Deine Branche", "Für jeden Einsatz die passende Spültechnik",
@@ -307,8 +362,8 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
          ("Nachhaltigkeit","/ueber-uns/nachhaltigkeit/","Extrem niedriger Wasser- und Energieverbrauch."),
        ],1)) + '</div></div></section>'
  + f'<section class="section section--dark"><div class="container">'
-   + section_head("Die Andersmacher", "Betriebe, die anders spülen",
-       "Vom Hofcafé bis zur Metzgerei: Diese Andersmacher setzen auf Ackermann.", light=True)
+   + section_head("Alle Andersmacher", "Lerne die ganze Bande kennen",
+       "Vom Hofcafé bis zur Metzgerei: Klick Dich durch alle Betriebe, die auf Ackermann setzen.", light=True)
    + andersmacher_grid() + '</div></section>'
  + cta_band("Bereit für die Alternative im Premiumbereich?",
      "Sprich mit uns – wir finden die passende Spüllösung für Deinen Betrieb."),
