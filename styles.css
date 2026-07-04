@@ -155,6 +155,56 @@ img { max-width: 100%; display: block; }
 .machine h4 { font-size: 1.05rem; margin-bottom: .25rem; }
 .machine p { color: var(--slate); font-size: .85rem; margin: 0; }
 
+.machine { text-decoration: none; }
+.machine__link { display: inline-block; margin-top: .7rem; font-weight: 600; color: var(--teal); font-size: .84rem; }
+
+/* machine detail: breadcrumb */
+.crumb { background: var(--muted); border-bottom: 1px solid var(--line); font-size: .88rem; }
+.crumb .container { padding: .7rem 0; color: var(--slate); }
+.crumb a { color: var(--teal); font-weight: 600; }
+.crumb span { margin: 0 .3rem; color: var(--slate-light); }
+
+/* machine detail: highlight band */
+.spec-hi-band { background: #fff; }
+.spec-hi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; margin-top: -2.6rem;
+  position: relative; z-index: 5; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-md); padding: 1.7rem 1rem; }
+.spec-hi { text-align: center; padding: .4rem 1rem; }
+.spec-hi + .spec-hi { border-left: 1px solid var(--line); }
+.spec-hi strong { display: block; font-family: "Poppins",sans-serif; font-size: 1.55rem; color: var(--teal); line-height: 1.1; }
+.spec-hi span { font-size: .84rem; color: var(--slate); }
+
+/* machine detail: layout */
+.spec-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2.5rem; align-items: start; }
+.spec-intro h2 { font-size: 1.7rem; margin: .3rem 0 1rem; }
+.spec-intro p { color: var(--ink-soft); margin: 0 0 1rem; }
+.enote { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-weight: 600;
+  font-size: .9rem; padding: .5rem .9rem; border-radius: 999px; }
+.feature-list { list-style: none; padding: 0; margin: 1.4rem 0 0; display: grid; gap: .7rem; }
+.feature-list li { position: relative; padding-left: 1.8rem; color: var(--ink-soft); }
+.feature-list li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 1.2rem; height: 1.2rem;
+  color: #fff; background: var(--teal); border-radius: 50%; font-size: .75rem; display: grid; place-items: center; font-weight: 700; }
+
+.spec-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6rem;
+  box-shadow: var(--shadow-md); position: sticky; top: 100px; }
+.spec-card h3 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--teal-dark); }
+.spec-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.spec-table th, .spec-table td { text-align: left; padding: .6rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.spec-table th { color: var(--slate); font-weight: 500; width: 55%; }
+.spec-table td { color: var(--ink); font-weight: 600; }
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: none; }
+.datasheet-btn { width: 100%; justify-content: center; margin-top: 1.3rem; }
+.spec-note { font-size: .78rem; color: var(--slate-light); margin: .8rem 0 0; text-align: center; }
+
+@media (max-width: 900px) {
+  .spec-layout { grid-template-columns: 1fr; }
+  .spec-card { position: static; }
+}
+@media (max-width: 760px) {
+  .spec-hi-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .spec-hi + .spec-hi { border-left: none; }
+}
+
 /* pillars */
 .pillars { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.1rem; }
 .pillar { padding: 1.5rem 1.2rem; border-radius: var(--radius); background: #fff; border: 1px solid var(--line);

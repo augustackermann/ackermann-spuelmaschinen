@@ -175,26 +175,26 @@ SOLUTIONS = [
 
 MACHINES = {
     "Untertischspülmaschinen": [
-        ("U 440", "Gläser", "U-440.png"),
-        ("U 540 Bistro", "Gläser", "U-540-Bistro.png"),
-        ("U 540E", "Gläser / Geschirr", "U-540E.png"),
-        ("U 640E", "Gläser / Geschirr / Gerätschaften", "U-640E.png"),
+        ("U 440", "Gläser", "U-440.png", "u-440"),
+        ("U 540 Bistro", "Gläser", "U-540-Bistro.png", "u-540-bistro"),
+        ("U 540E", "Gläser / Geschirr", "U-540E.png", "u-540e"),
+        ("U 640E", "Gläser / Geschirr / Gerätschaften", "U-640E.png", "u-640e"),
     ],
     "Haubenspülmaschinen": [
-        ("H 540E", "Gläser / Geschirr", "H-540E.png"),
-        ("H 540E Klima+", "Gläser / Geschirr", "H-540E-Klima-Plus.png"),
-        ("H 640", "Gläser / Geschirr / Gerätschaften", "H-640.png"),
-        ("H 640 Klima+", "Gläser / Geschirr / Gerätschaften", "H-640-Klima-Plus.png"),
+        ("H 540E", "Gläser / Geschirr", "H-540E.png", "h-540e"),
+        ("H 540E Klima+", "Gläser / Geschirr", "H-540E-Klima-Plus.png", "h-540e-klima-plus"),
+        ("H 640", "Gläser / Geschirr / Gerätschaften", "H-640.png", "h-640"),
+        ("H 640 Klima+", "Gläser / Geschirr / Gerätschaften", "H-640-Klima-Plus.png", "h-640-klima-plus"),
     ],
     "Gerätespülmaschinen": [
-        ("F 720", "Gerätschaften", "F-720.png"),
-        ("F 920", "Gerätschaften", "F-920.png"),
+        ("F 720", "Gerätschaften", "F-720.png", "f-720"),
+        ("F 920", "Gerätschaften", "F-920.png", "f-920"),
     ],
     "Korbtransportspülmaschinen": [
-        ("KT-1", "Gläser / Geschirr / Gerätschaften", "KT1.png"),
-        ("KT-1 PLUS", "Gläser / Geschirr / Gerätschaften", "KT1-Plus.png"),
-        ("KT-2", "Gläser / Geschirr / Gerätschaften", "KT2.png"),
-        ("KT-2 PLUS", "Gläser / Geschirr / Gerätschaften", "KT2-Plus.png"),
+        ("KT-1", "Gläser / Geschirr / Gerätschaften", "KT1.png", "kt-1"),
+        ("KT-1 PLUS", "Gläser / Geschirr / Gerätschaften", "KT1-Plus.png", "kt-1-plus"),
+        ("KT-2", "Gläser / Geschirr / Gerätschaften", "KT2.png", "kt-2"),
+        ("KT-2 PLUS", "Gläser / Geschirr / Gerätschaften", "KT2-Plus.png", "kt-2-plus"),
     ],
 }
 
@@ -231,11 +231,12 @@ def cards_solutions():
 def machine_grid():
     out = []
     for cat, items in MACHINES.items():
-        cards = "".join(f"""<div class="machine">
+        cards = "".join(f"""<a class="machine" href="/produkte/spuelmaschinen/{slug}/">
   <div class="machine__media"><img src="/assets/img/machines/{img}" alt="{html.escape(name)}" loading="lazy"></div>
   <h4>{html.escape(name)}</h4>
   <p>{html.escape(use)}</p>
-</div>""" for name, use, img in items)
+  <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
+</a>""" for name, use, img, slug in items)
         out.append(f'<h3 class="machine-cat">{html.escape(cat)}</h3><div class="cards cards--4 machine-row">{cards}</div>')
     return "\n".join(out)
 
@@ -552,6 +553,199 @@ legal("/datenschutz/", "datenschutz/index.html", "Datenschutz", [
 ])
 
 # ---------------------------------------------------------------- write
+# ---------------------------------------------------------------- machine detail pages
+# Values are the factual specifications from the official Ackermann datasheets,
+# re-presented in a fresh layout. Each page links the original PDF as the
+# authoritative source ("Alle Angaben laut offiziellem Datenblatt").
+_F = "Doppelwandige Edelstahl-Konstruktion für leisen, langlebigen Betrieb"
+MACHINE_DETAIL = {
+ "u-440": dict(name="U 440", series="Untertisch · Gläser & Bistro", img="U-440.png",
+   pdf="/assets/datasheets/Datenblatt-U-440.pdf",
+   tagline="Kompakte Gläser- und Bistrospülmaschine für Körbe 400 × 400 mm.",
+   intro=["Die U 440 ist die kompakte Einstiegsmaschine für Bars, Cafés und kleine Bistros. Sie passt unter jede Theke und liefert bei minimalem Platzbedarf glasklare Ergebnisse.",
+          "Einfache Bedienung, ein doppelwandiges Gehäuse für leisen Betrieb und geringer Verbrauch machen sie zur idealen Wahl für den täglichen Einsatz."],
+   highlights=[("400 × 400 mm","Korbgröße"),("40","Körbe / Stunde"),("230 V","Stromanschluss"),("3,4 kW","Anschlusswert")],
+   specs=[("Korbgröße","400 × 400 mm"),("Theor. Stundenleistung","40 Körbe/h"),("Stromanschluss","230 V / 50 Hz"),
+          ("Gesamtanschlusswert","3,4 kW"),("Absicherung","16 A"),("Tankinhalt","8 l"),("Tanktemperatur","60–65 °C"),
+          ("Boilerinhalt","6 l"),("Leistung Umwälzpumpe","200 W"),("Gehäuse doppelwandig","ja")],
+   features=[_F,"Kompakte Stellfläche – passt unter jede Theke","Anschluss an normale 230-V-Steckdose","Intuitive Bedienung, wartungsarm","Ideal für Gläser, Tassen und Bistrogeschirr"]),
+ "u-540-bistro": dict(name="U 540 Bistro", series="Untertisch · Gläser & Bistro", img="U-540-Bistro.png",
+   pdf="/assets/datasheets/Datenblatt-U-540-Bistro.pdf",
+   tagline="Bistrospülmaschine mit großem 500 × 500 mm Korb für gemischtes Spülgut.",
+   intro=["Die U 540 Bistro kombiniert den kompakten Untertisch-Formfaktor mit einem großen 500 × 500 mm Korb – so lassen sich Gläser und Bistrogeschirr flexibel gemeinsam spülen.",
+          "Der große Tank und die kräftige Umwälzpumpe sorgen für gleichbleibend gute Ergebnisse, auch im Dauereinsatz."],
+   highlights=[("500 × 500 mm","Korbgröße"),("40","Körbe / Stunde"),("400 V","Stromanschluss"),("7,9 kW","Anschlusswert")],
+   specs=[("Korbgröße","500 × 500 mm"),("Theor. Stundenleistung","40 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz (opt. 230 V, 3,4 kW)"),
+          ("Gesamtanschlusswert","7,9 kW"),("Absicherung","16 A"),("Tankinhalt","15 l"),("Tanktemperatur","60–65 °C"),
+          ("Boilerinhalt","6 l"),("Leistung Umwälzpumpe","470 W"),("Gehäuse doppelwandig","ja")],
+   features=[_F,"Großer 500 × 500 mm Korb für Gläser und Geschirr","Wahlweise 400-V- oder 230-V-Anschluss","Kräftige Umwälzpumpe für konstante Ergebnisse","Geringer Wasser- und Energieverbrauch"]),
+ "u-540e": dict(name="U 540E", series="Untertisch-Geschirrspülmaschine", img="U-540E.png",
+   pdf="/assets/datasheets/Datenblatt-U-540-U-540E.pdf",
+   tagline="Untertisch-Geschirrspülmaschine für Körbe 500 × 500 mm – mit eingebautem Wasserenthärter.",
+   intro=["Die U 540E ist die Geschirrspülmaschine für den anspruchsvollen Alltag. Mit 385 mm Einfahrhöhe nimmt sie auch höheres Geschirr auf.",
+          "Das E-Modell bringt einen eingebauten Wasserenthärter mit – für kalkfreie, streifenlose Ergebnisse ohne separate Enthärtungsanlage."],
+   highlights=[("500 × 500 mm","Korbgröße"),("40","Körbe / Stunde"),("385 mm","Einfahrhöhe"),("7,9 kW","Anschlusswert")],
+   specs=[("Korbgröße","500 × 500 mm"),("Einfahrhöhe","385 mm"),("Theor. Stundenleistung","40 Körbe/h"),
+          ("Stromanschluss","400 V / 3 / 50 Hz"),("Gesamtanschlusswert","7,9 kW"),("Absicherung","16 A"),
+          ("Tankinhalt","15 l"),("Tanktemperatur","60–65 °C"),("Boilerinhalt","6 l"),("Leistung Umwälzpumpe","470 W")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=[_F,"Eingebauter Wasserenthärter für kalkfreie Ergebnisse","385 mm Einfahrhöhe – auch für höheres Geschirr","Große 500 × 500 mm Körbe","Effizient bei Wasser und Energie"]),
+ "u-640e": dict(name="U 640E", series="Untertisch · Geschirr & Gerätschaften", img="U-640E.png",
+   pdf="/assets/datasheets/Datenblatt-U-640-U-640E.pdf",
+   tagline="Die größte Untertisch – auch für Tabletts und Gerätschaften.",
+   intro=["Die U 640E ist unsere leistungsstärkste Untertischmaschine: Sie bewältigt Geschirr, Tabletts (bis 600 × 400 mm / EN 4) und Gerätschaften gleichermaßen.",
+          "Mit größerem Tank und höherer Stundenleistung ist sie ideal für Betriebe, die aus dem Untertisch-Format herauswachsen – inklusive eingebautem Wasserenthärter."],
+   highlights=[("bis 600 × 400 mm","Tabletts / EN 4"),("48","Körbe / Stunde"),("9,8 kW","Anschlusswert"),("25 l","Tankinhalt")],
+   specs=[("Korbgröße","500 × 500 mm"),("Passend für Tabletts","600 × 400 mm (EN 4)"),("Theor. Stundenleistung","48 Körbe/h"),
+          ("Stromanschluss","400 V / 3 / 50 Hz"),("Gesamtanschlusswert","9,8 kW"),("Absicherung","16 A"),
+          ("Tankinhalt","25 l"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C"),("Leistung Umwälzpumpe","700 W")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=[_F,"Auch für Tabletts (EN 4) und Gerätschaften","Eingebauter Wasserenthärter","Großer 25-l-Tank für konstante Leistung","Höchste Kapazität im Untertisch-Format"]),
+ "h-540e": dict(name="H 540E", series="Haubenspülmaschine", img="H-540E.png",
+   pdf="/assets/datasheets/Datenblatt-H-540-H-540E.pdf",
+   tagline="Durchschub-Haubenmaschine mit hoher Leistung für den Dauerbetrieb.",
+   intro=["Die H 540E ist die klassische Haubenspülmaschine für mittlere bis große Betriebe. Bis zu 60 Körbe pro Stunde und 460 mm Einfahrhöhe meistern jeden Ansturm.",
+          "Als Durchschubmaschine lässt sie sich perfekt in Spülstraßen integrieren – das E-Modell mit eingebautem Wasserenthärter."],
+   highlights=[("500 × 500 mm","Korbgröße"),("60","Körbe / Stunde"),("460 mm","Einfahrhöhe"),("2.070 mm","Höhe offene Haube")],
+   specs=[("Korbgröße","500 × 500 mm"),("Einfahrhöhe","460 mm"),("Höhe mit geöffneter Haube","2.070 mm"),
+          ("Theor. Stundenleistung","60 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz"),("Boilerleistung","7.000 W"),
+          ("Tankinhalt","22 l"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=[_F,"Bis 60 Körbe/h – für den Dauerbetrieb","460 mm Einfahrhöhe für hohes Spülgut","Ideal für Spülstraßen (Durchschub)","Eingebauter Wasserenthärter"]),
+ "h-540e-klima-plus": dict(name="H 540E Klima+", series="Haubenspülmaschine · Klima+", img="H-540E-Klima-Plus.png",
+   pdf="/assets/datasheets/Datenblatt-H540KlimaPlus-H540EKlimaPlus.pdf",
+   tagline="Haubenmaschine mit Wärmerückgewinnung – weniger Energie, weniger Wrasen.",
+   intro=["Die Klima+-Variante der H 540E bringt eine integrierte Wärmerückgewinnung mit: Die Abwärme wird genutzt, um Frischwasser vorzuwärmen. Das spart Energie und reduziert den Wrasen beim Öffnen der Haube deutlich.",
+          "So bleibt das Arbeitsklima angenehm – bei gleicher Spülleistung von bis zu 60 Körben pro Stunde."],
+   highlights=[("500 × 500 mm","Korbgröße"),("60","Körbe / Stunde"),("Klima+","Wärmerückgewinnung"),("460 mm","Einfahrhöhe")],
+   specs=[("Korbgröße","500 × 500 mm"),("Einfahrhöhe","460 mm"),("Theor. Stundenleistung","60 Körbe/h"),
+          ("Wärmerückgewinnung","ja (Klima+)"),("Stromanschluss","400 V / 3 / 50 Hz"),("Boilerleistung","7.000 W"),
+          ("Tankinhalt","22 l"),("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
+   e_note="E-Modell: mit eingebautem Wasserenthärter",
+   features=["Klima+: integrierte Wärmerückgewinnung senkt den Energieverbrauch","Deutlich weniger Wrasen beim Haubenöffnen","Angenehmes Arbeitsklima am Spülplatz",_F,"Eingebauter Wasserenthärter"]),
+ "h-640": dict(name="H 640", series="Haubenspülmaschine · Geschirr & Gerätschaften", img="H-640.png",
+   pdf="/assets/datasheets/Datenblatt-H640.pdf",
+   tagline="Große Haubenmaschine – auch für Tabletts und Gerätschaften.",
+   intro=["Die H 640 ist die leistungsstarke Haubenmaschine für gemischtes Spülgut: Geschirr, Tabletts (600 × 400 mm / EN 4) und Gerätschaften in einem Durchgang.",
+          "Robuste Technik und hohe Kapazität machen sie zur ersten Wahl für Kantinen, Hotels und Gemeinschaftsverpflegung."],
+   highlights=[("500 × 500 mm","Korbgröße"),("60","Körbe / Stunde"),("9,5 kW","Anschlusswert"),("600 × 400 mm","Tabletts / EN 4")],
+   specs=[("Korbgröße","500 × 500 mm"),("Passend für Tabletts","600 × 400 mm (EN 4)"),("Theor. Stundenleistung","60 Körbe/h"),
+          ("Stromanschluss","400 V / 3 / 50 Hz"),("Gesamtanschlusswert","9,5 kW"),("Tanktemperatur","60–65 °C"),
+          ("Boilertemperatur","80–85 °C")],
+   features=[_F,"Auch für Tabletts (EN 4) und Gerätschaften","Hohe Kapazität für Kantine & Hotel","Bis 60 Körbe/h","Robuste Durchschub-Konstruktion"]),
+ "h-640-klima-plus": dict(name="H 640 Klima+", series="Haubenspülmaschine · Klima+", img="H-640-Klima-Plus.png",
+   pdf="/assets/datasheets/Datenblatt-H640KlimaPlus.pdf",
+   tagline="Die H 640 mit integrierter Wärmerückgewinnung.",
+   intro=["Die H 640 Klima+ vereint die hohe Kapazität der H 640 mit integrierter Wärmerückgewinnung. Die genutzte Abwärme senkt den Energieverbrauch und reduziert den Wrasen spürbar.",
+          "Ideal für Betriebe mit hohem Spülaufkommen, die zugleich auf Effizienz und ein angenehmes Arbeitsklima achten."],
+   highlights=[("500 × 500 mm","Korbgröße"),("60","Körbe / Stunde"),("Klima+","Wärmerückgewinnung"),("9,5 kW","Anschlusswert")],
+   specs=[("Korbgröße","500 × 500 mm"),("Passend für Tabletts","600 × 400 mm (EN 4)"),("Theor. Stundenleistung","60 Körbe/h"),
+          ("Wärmerückgewinnung","ja (Klima+)"),("Stromanschluss","400 V / 3 / 50 Hz"),("Gesamtanschlusswert","9,5 kW"),
+          ("Tanktemperatur","60–65 °C"),("Boilertemperatur","80–85 °C")],
+   features=["Klima+: integrierte Wärmerückgewinnung","Weniger Wrasen, angenehmeres Arbeitsklima","Auch für Tabletts (EN 4) und Gerätschaften",_F,"Hohe Kapazität für Großbetriebe"]),
+ "f-720": dict(name="F 720", series="Gerätespülmaschine", img="F-720.png",
+   pdf="/assets/datasheets/Datenblatt-F720.pdf",
+   tagline="Gerätespülmaschine für Bleche, Töpfe und großes Spülgut.",
+   intro=["Die F 720 ist auf sperriges Spülgut spezialisiert: Bleche, Töpfe, Behälter und Gerätschaften bis 800 × 600 mm. Mit 850 mm Einfahrhöhe nimmt sie auch hohe Teile auf.",
+          "Kräftige Umwälzpumpe und leistungsstarker Boiler sorgen für hygienisch saubere Ergebnisse – ideal für Bäckereien, Metzgereien und Großküchen."],
+   highlights=[("bis 800 × 600 mm","Spülgut"),("850 mm","Einfahrhöhe"),("68 l","Tankinhalt"),("2.700 W","Umwälzleistung")],
+   specs=[("Passend für Bleche/Tabletts","800 × 600 mm"),("Einfahrhöhe","850 mm"),("Theor. Stundenleistung","30 Körbe/h"),
+          ("Stromanschluss","400 V / 3 / 50 Hz"),("Boilerleistung","10.500 W"),("Tankinhalt","68 l"),
+          ("Leistung Umwälzpumpe","2.700 W"),("Boilertemperatur","80–85 °C")],
+   features=[_F,"Für Bleche, Töpfe und Gerätschaften bis 800 × 600 mm","850 mm Einfahrhöhe für sperriges Spülgut","Kräftige Umwälzpumpe (2.700 W)","Ideal für Bäckerei, Metzgerei & Großküche"]),
+ "f-920": dict(name="F 920", series="Gerätespülmaschine XL", img="F-920.png",
+   pdf="/assets/datasheets/Datenblatt-F-920.pdf",
+   tagline="Die große Gerätespülmaschine für Bäckereien und Großküchen.",
+   intro=["Die F 920 ist unsere größte Gerätespülmaschine – ausgelegt auf Bleche und Tabletts bis 1.200 × 600 mm. Zwei kräftige Umwälzpumpen bewältigen selbst stark verschmutztes Spülgut.",
+          "Wo täglich viele Bleche und Behälter anfallen, spielt die F 920 ihre Stärke aus: maximale Kapazität bei zuverlässiger Hygiene."],
+   highlights=[("bis 1.200 × 600 mm","Spülgut"),("850 mm","Einfahrhöhe"),("2 × 2.700 W","Umwälzleistung"),("30","Körbe / Stunde")],
+   specs=[("Passend für Bleche/Tabletts","1.200 × 600 mm"),("Einfahrhöhe","850 mm"),("Theor. Stundenleistung","30 Körbe/h"),
+          ("Stromanschluss","400 V / 3 / 50 Hz"),("Boilerleistung","10.500 W"),("Leistung Umwälzpumpe","2 × 2.700 W"),
+          ("Boilertemperatur","80–85 °C")],
+   features=[_F,"Für Bleche und Tabletts bis 1.200 × 600 mm","Zwei kräftige Umwälzpumpen","Maximale Kapazität für hohe Aufkommen","Ideal für Großbäckereien & Großküchen"]),
+ "kt-1": dict(name="KT-1", series="Korbtransportspülmaschine", img="KT1.png",
+   pdf="/assets/datasheets/Datenblatt_KT_1_KT_2_2024.pdf",
+   tagline="Korbtransport-Spülmaschine für hohe, kontinuierliche Durchsätze.",
+   intro=["Die KT-1 transportiert die Körbe automatisch durch die Maschine – für kontinuierliches Spülen ohne Handgriffe. Bis zu 160 Körbe pro Stunde bewältigen auch großes Aufkommen.",
+          "Robuste Edelstahl-Konstruktion und durchdachte Zonen sorgen für zuverlässige Hygiene bei wirtschaftlichem Verbrauch."],
+   highlights=[("80–160","Körbe / Stunde"),("500 × 500 mm","Korbgröße"),("22,2 kW","Anschlusswert (55 °C)"),("170 l/h","max. Wasserverbrauch")],
+   specs=[("Abmessung (B × T × H)","1.450 × 770 × 1.565 mm"),("Einfahrhöhe","450 mm"),("Korbabmessung","500 × 500 mm"),
+          ("Theor. Stundenleistung","80–160 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Gesamtanschlusswert (55 °C)","22,2 kW"),("Gesamtanschlusswert (15 °C)","28,7 kW"),
+          ("Tankinhalt Waschzone","70 l"),("Tanktemperatur","55–60 °C"),("Boilertemperatur","80–85 °C"),
+          ("Wasserverbrauch max.","170 l/h"),("Gewicht netto","240 kg")],
+   features=["Automatischer Korbtransport – kontinuierliches Spülen","Bis 160 Körbe/h für hohes Aufkommen","Robuste Edelstahl-Konstruktion","Wirtschaftlicher Wasser- und Energieverbrauch"]),
+ "kt-2": dict(name="KT-2", series="Korbtransportspülmaschine", img="KT2.png",
+   pdf="/assets/datasheets/Datenblatt_KT_1_KT_2_2024.pdf",
+   tagline="Die größere Korbtransportmaschine mit Vorspül- und Waschzone.",
+   intro=["Die KT-2 erweitert das Korbtransport-Prinzip um eine separate Vorspülzone. So werden bis zu 270 Körbe pro Stunde bei bester Reinigung möglich.",
+          "Ideal für Kantinen, Caterer und Großküchen mit hohem, konstantem Spülaufkommen."],
+   highlights=[("130–270","Körbe / Stunde"),("500 × 500 mm","Korbgröße"),("29,7 kW","Anschlusswert (55 °C)"),("280 l/h","max. Wasserverbrauch")],
+   specs=[("Abmessung (B × T × H)","2.268 × 770 × 1.565 mm"),("Einfahrhöhe","450 mm"),("Korbabmessung","500 × 500 mm"),
+          ("Theor. Stundenleistung","130–270 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Gesamtanschlusswert (55 °C)","29,7 kW"),("Gesamtanschlusswert (15 °C)","41,2 kW"),
+          ("Tankinhalt Vorspül-/Waschzone","70 / 70 l"),("Tanktemperatur","55–60 °C"),("Boilertemperatur","80–85 °C"),
+          ("Wasserverbrauch max.","280 l/h"),("Gewicht netto","340 kg")],
+   features=["Separate Vorspül- und Waschzone","Bis 270 Körbe/h für höchste Durchsätze","Automatischer Korbtransport","Für Kantine, Catering & Großküche"]),
+ "kt-1-plus": dict(name="KT-1 Plus", series="Korbtransportspülmaschine · Plus", img="KT1-Plus.png",
+   pdf="/assets/datasheets/Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf",
+   tagline="KT 1 Plus – noch effizienter dank optimierter Zonen.",
+   intro=["Die KT-1 Plus optimiert das bewährte KT-1-Konzept: Bei bis zu 200 Körben pro Stunde sinkt der Wasserverbrauch auf nur 160 l/h.",
+          "Höhere Bauhöhe und verfeinerte Technik machen sie zur effizienten Wahl für anspruchsvolle Dauereinsätze."],
+   highlights=[("100–200","Körbe / Stunde"),("500 × 500 mm","Korbgröße"),("23,7 kW","Anschlusswert (55 °C)"),("160 l/h","max. Wasserverbrauch")],
+   specs=[("Abmessung (B × T × H)","2.001 × 770 × 1.880 mm"),("Einfahrhöhe","450 mm"),("Korbabmessung","500 × 500 mm"),
+          ("Theor. Stundenleistung","100–200 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Gesamtanschlusswert (55 °C)","23,7 kW"),("Gesamtanschlusswert (15 °C)","30,2 kW"),
+          ("Tankinhalt Waschzone","70 l"),("Tanktemperatur","55–60 °C"),("Boilertemperatur","80–85 °C"),
+          ("Wasserverbrauch max.","160 l/h"),("Gewicht netto","300 kg")],
+   features=["Optimierte Zonen für höhere Effizienz","Nur 160 l/h bei bis zu 200 Körben/h","Automatischer Korbtransport","Robuste Edelstahl-Konstruktion"]),
+ "kt-2-plus": dict(name="KT-2 Plus", series="Korbtransportspülmaschine · Plus", img="KT2-Plus.png",
+   pdf="/assets/datasheets/Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf",
+   tagline="Das Flaggschiff: höchste Durchsätze mit Vorspül- und Waschzone.",
+   intro=["Die KT-2 Plus ist unsere leistungsstärkste Korbtransportmaschine: Vorspül- und Waschzone, bis zu 270 Körbe pro Stunde und dennoch nur 220 l/h Wasserverbrauch.",
+          "Für Großküchen und Caterer, bei denen kontinuierlich große Mengen anfallen – maximale Leistung bei kontrolliertem Verbrauch."],
+   highlights=[("135–270","Körbe / Stunde"),("500 × 500 mm","Korbgröße"),("28,2 kW","Anschlusswert (55 °C)"),("220 l/h","max. Wasserverbrauch")],
+   specs=[("Abmessung (B × T × H)","2.819 × 770 × 1.880 mm"),("Einfahrhöhe","450 mm"),("Korbabmessung","500 × 500 mm"),
+          ("Theor. Stundenleistung","135–270 Körbe/h"),("Stromanschluss","400 V / 3 / 50 Hz"),
+          ("Gesamtanschlusswert (55 °C)","28,2 kW"),("Gesamtanschlusswert (15 °C)","37,7 kW"),
+          ("Tankinhalt Vorspül-/Waschzone","70 / 70 l"),("Tanktemperatur","55–60 °C"),("Boilertemperatur","80–85 °C"),
+          ("Wasserverbrauch max.","220 l/h"),("Gewicht netto","440 kg")],
+   features=["Separate Vorspül- und Waschzone","Bis 270 Körbe/h bei nur 220 l/h","Automatischer Korbtransport","Für Großküche & Catering mit Höchstlast"]),
+}
+
+for slug, d in MACHINE_DETAIL.items():
+    url = f"/produkte/spuelmaschinen/{slug}/"
+    filename = f"produkte/spuelmaschinen/{slug}/index.html"
+    highs = "".join(f'<div class="spec-hi"><strong>{v}</strong><span>{html.escape(l)}</span></div>' for v, l in d["highlights"])
+    feats = "".join(f'<li>{html.escape(x)}</li>' for x in d["features"])
+    rows = "".join(f'<tr><th>{html.escape(l)}</th><td>{html.escape(v)}</td></tr>' for l, v in d["specs"])
+    intro = "".join(f"<p>{html.escape(p)}</p>" for p in d["intro"])
+    enote = f'<p class="enote">✚ {html.escape(d["e_note"])}</p>' if d.get("e_note") else ""
+    body = (
+      f'<div class="crumb"><div class="container"><a href="/produkte/spuelmaschinen/">Spülmaschinen</a> '
+      f'<span>›</span> {html.escape(d["name"])}</div></div>'
+      + hero(f'Spülmaschinen · {d["series"]}', html.escape(d["name"]), html.escape(d["tagline"]),
+             cta=[("Anfrage senden", "/kontakt/", "btn--primary"),
+                  ("Datenblatt (PDF)", d["pdf"], "btn--ghost")],
+             img=f'/assets/img/machines/{d["img"]}', cls="hero--sub")
+      + f'<section class="spec-hi-band"><div class="container spec-hi-grid">{highs}</div></section>'
+      + '<section class="section"><div class="container spec-layout">'
+        + f'<div class="spec-intro"><p class="eyebrow">Überblick</p><h2>{html.escape(d["name"])} im Detail</h2>'
+          f'{intro}{enote}<ul class="feature-list">{feats}</ul></div>'
+        + f'<aside class="spec-card"><h3>Technische Daten</h3><table class="spec-table"><tbody>{rows}</tbody></table>'
+          f'<a class="btn btn--primary datasheet-btn" href="{d["pdf"]}" target="_blank" rel="noopener">⭳ Original-Datenblatt (PDF)</a>'
+          f'<p class="spec-note">Alle Angaben laut offiziellem Datenblatt. Änderungen und Irrtümer vorbehalten.</p></aside>'
+      + '</div></section>'
+      + cta_band(f'Passt die {html.escape(d["name"])} zu Deinem Betrieb?',
+                 "Wir beraten Dich persönlich und unverbindlich – und finden die richtige Maschine.",
+                 "Beratung anfragen")
+      + '<section class="section section--muted"><div class="container">'
+        + section_head("Weitere Modelle", "Alle Spülmaschinen im Überblick")
+        + '<div style="text-align:center"><a class="btn btn--primary" href="/produkte/spuelmaschinen/">Zur Produktübersicht</a></div>'
+      + '</div></section>')
+    PAGES[url] = (filename, d["name"], page("/produkte/spuelmaschinen/", d["name"], body,
+        f'{d["name"]} – {d["tagline"]} Technische Daten und Datenblatt.'))
+
 # BASE_PATH lets the same source deploy at a sub-path (GitHub Pages project site)
 # or at root (local server). All internal refs start with ="/ ; external ones
 # start with ="http, ="tel:, ="mailto:, ="# and are left untouched.
