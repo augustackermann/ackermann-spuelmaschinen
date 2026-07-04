@@ -306,24 +306,22 @@ def story_slider():
         dots += f'<button class="story-dot{active}" data-go="{i}" aria-label="Story {i+1}"></button>'
     first = STORY_SLIDES[0]
     return f"""<section class="story" id="stories" aria-label="Die Andersmacher – Kundenstimmen">
-  <img src="/assets/img/bee-teal.png" alt="" class="story__bee story__bee--1" aria-hidden="true">
-  <div class="container">
-    <div class="as-grid">
-      <div class="as-panel">
-        <p class="eyebrow eyebrow--light">Die Andersmacher</p>
-        <blockquote id="story-quote">&bdquo;{html.escape(first[0])}&ldquo;</blockquote>
-        <div class="as-person">
-          <strong id="story-person">{html.escape(first[1])}</strong>
-          <span id="story-firm">{html.escape(first[2])}</span>
-        </div>
-        <a id="story-link" href="{first[4]}" class="btn btn--ghost btn--sm">Zur Story &rarr;</a>
-        <div class="story-dots">{dots}</div>
+  <div class="as-grid">
+    <div class="as-panel">
+      <img src="/assets/img/bee-teal.png" alt="" class="as-panel__bee" aria-hidden="true">
+      <p class="eyebrow eyebrow--light">Die Andersmacher</p>
+      <blockquote id="story-quote">&bdquo;{html.escape(first[0])}&ldquo;</blockquote>
+      <div class="as-person">
+        <strong id="story-person">{html.escape(first[1])}</strong>
+        <span id="story-firm">{html.escape(first[2])}</span>
       </div>
-      <div class="as-media">
-        {photos}
-        <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
-        <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
-      </div>
+      <a id="story-link" href="{first[4]}" class="btn btn--ghost btn--sm">Zur Story &rarr;</a>
+      <div class="story-dots">{dots}</div>
+    </div>
+    <div class="as-media">
+      {photos}
+      <button class="story-arrow story-arrow--prev" aria-label="Vorherige Story">&#8249;</button>
+      <button class="story-arrow story-arrow--next" aria-label="Nächste Story">&#8250;</button>
     </div>
   </div>
 </section>"""

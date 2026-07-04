@@ -105,17 +105,23 @@ img { max-width: 100%; display: block; }
 .story__bee--2 { bottom: 10%; right: 5%; width: 90px; opacity: .18; animation: bee-float 8s ease-in-out infinite reverse; }
 @keyframes bee-float { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-16px) rotate(4deg); } }
 
-/* split slider: quote panel left (before the image), cross-fading image right */
-.story { padding: 3rem 0 3.5rem; }
+/* split slider: full-bleed edge to edge, quote panel left, image right */
+.story { padding: 0; }
 .as-grid {
-  display: grid; grid-template-columns: 1fr 1.15fr; min-height: 480px;
-  border-radius: 26px; overflow: hidden; box-shadow: var(--shadow-md);
+  display: grid; grid-template-columns: 1fr 1.3fr;
+  min-height: clamp(480px, 72vh, 760px);
 }
 .as-panel {
   background: linear-gradient(150deg, var(--ink), #1e2430 62%, var(--teal-dark) 190%);
-  color: #fff; padding: 3rem 2.8rem; display: flex; flex-direction: column;
+  color: #fff; display: flex; flex-direction: column;
   justify-content: center; align-items: flex-start; gap: 1.1rem;
+  position: relative;
+  padding: 3.5rem max(2.8rem, calc((100vw - var(--container)) / 2)) 3.5rem
+           max(2.8rem, calc((100vw - var(--container)) / 2));
+  padding-right: 3rem;
 }
+.as-panel__bee { position: absolute; top: 2rem; right: 2rem; width: 58px; opacity: .3;
+  animation: bee-float 7s ease-in-out infinite; }
 .as-panel blockquote {
   margin: 0; font-family: "Poppins",sans-serif; font-weight: 700; color: #fff;
   font-size: clamp(1.5rem, 2.7vw, 2.3rem); line-height: 1.22; min-height: 5.6em;
