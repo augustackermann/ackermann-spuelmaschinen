@@ -168,7 +168,7 @@ img { max-width: 100%; display: block; }
 .partner__text a { color: var(--teal); font-weight: 600; }
 .partner__text a:hover { color: var(--teal-dark); }
 .partner__team { margin-top: 3rem; display: grid; place-items: center; }
-.partner__team img { width: min(500px, 100%); aspect-ratio: 1; object-fit: cover; border-radius: 22px; box-shadow: var(--shadow-md); }
+.partner__team img { width: min(640px, 100%); height: auto; border-radius: 22px; box-shadow: var(--shadow-md); }
 
 /* alternative / spülmobil section with image */
 .alt-sec__inner { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }
@@ -273,8 +273,8 @@ img { max-width: 100%; display: block; }
 .product:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
 .product__media { background: var(--teal-light); display: grid; place-items: center; padding: 1rem; }
 .product__media img { max-height: 190px; width: auto; }
-.product__media--chem { display: flex; gap: .35rem; justify-content: center; background: #fff; }
-.product__media--chem img { width: 66px; height: 66px; object-fit: contain; filter: drop-shadow(0 10px 16px rgba(22,25,34,.14)); }
+.product__media--chem { background: #fff; }
+.product__media--chem img { max-height: 190px; width: auto; object-fit: contain; filter: drop-shadow(0 10px 16px rgba(22,25,34,.14)); }
 .product__body { padding: 1.7rem; }
 .product__body h3 { font-size: 1.35rem; margin-bottom: .5rem; }
 .product__body p { color: var(--slate); margin-bottom: 1rem; }

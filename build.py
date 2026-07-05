@@ -358,10 +358,6 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
     <img src="/assets/img/Gruppenbild-2.png" alt="Das Ackermann Spülmaschinen Team">
   </div>
 </section>"""
- + f'<section class="section" id="loesungen"><div class="container">'
-   + section_head("Lösungen für Deine Branche", "Für jeden Einsatz die passende Spültechnik",
-       "Entdecke unsere Lösungen für Deine Branche – individuell abgestimmt auf Deine Anforderungen, Deine Abläufe und Dein Spülgut.")
-   + cards_solutions() + '</div></section>'
  + """<section class="section section--dark alt-sec">
   <div class="container alt-sec__inner">
     <div class="alt-sec__text">
@@ -381,8 +377,12 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
     </div>
   </div>
 </section>"""
- + f'<section class="section section--muted"><div class="container">'
-   + section_head("Produkte", "Alles fürs perfekte Spülergebnis")
+ + f'<section class="section" id="loesungen"><div class="container">'
+   + section_head("Lösungen für Deine Branche", "Für jeden Einsatz die passende Spültechnik",
+       "Entdecke unsere Lösungen für Deine Branche – individuell abgestimmt auf Deine Anforderungen, Deine Abläufe und Dein Spülgut.")
+   + cards_solutions() + '</div></section>'
+ + f'<section class="section section--dark"><div class="container">'
+   + section_head("Produkte", "Alles fürs perfekte Spülergebnis", light=True)
    + f"""<div class="cards cards--2">
       <a class="product" href="/produkte/spuelmaschinen/">
         <div class="product__media"><img src="/assets/img/machines/U-540E.png" alt="Spülmaschinen"></div>
@@ -392,24 +392,22 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
       </a>
       <a class="product" href="/produkte/spuelchemie/">
         <div class="product__media product__media--chem">
-          <img src="/assets/img/chemie/F_500_GS.jpg" alt="F 500 GS Reiniger">
           <img src="/assets/img/chemie/Klar_GS.jpg" alt="KLAR GS Klarspüler">
-          <img src="/assets/img/chemie/Entkalker.jpg" alt="Entkalker F">
         </div>
         <div class="product__body"><h3>Spülchemie</h3>
           <p>Passgenau abgestimmte Reiniger, Klarspüler und Pflegemittel für glänzend saubere Ergebnisse bei minimalem Verbrauch.</p>
           <span class="card__link">Zur Spülchemie &rarr;</span></div>
       </a></div></div></section>"""
  + f'<section class="section"><div class="container">'
-   + section_head("Über uns", "Qualität und Service: Entdecke die Alternative!",
-       "Als familiengeführter Systemanbieter für gewerbliche Spültechnik zählen wir zu den Top 5 der Branche – mit schlanken Abläufen, fairen Preisen und klarem Fokus auf das optimale Spülergebnis.")
+   + section_head("Über uns", "5 Gründe für Ackermann",
+       "Unsere Stärke liegt nicht in lauten Versprechen, sondern in Technik, Service und Haltung, die im Alltag zuverlässig funktionieren.")
    + '<div class="pillars">'
    + "".join(f'<a class="pillar" href="{u}"><span class="pillar__no">{n:02d}</span><h3>{t}</h3><p>{d}</p></a>'
        for n,(t,u,d) in enumerate([
-         ("Unser Team","/ueber-uns/","Menschen, die Spültechnik leben und Dich persönlich beraten."),
-         ("Qualität","/ueber-uns/qualitaet/","Premium-Technik, die im harten Alltag zuverlässig läuft."),
-         ("Service","/ueber-uns/service/","Schnell erreichbar, kompetent vor Ort – aus einer Hand."),
-         ("Innovationen","/ueber-uns/innovationen/","Durchdachte Technik für bessere Ergebnisse und Effizienz."),
+         ("Unser Team","/ueber-uns/","Bodenständig, persönlich und nah dran an den Menschen, die täglich mit unserer Technik arbeiten."),
+         ("Qualität","/ueber-uns/qualitaet/","Robuste Maschinen, gebaut für den harten Alltag in Küche, Betrieb und Dauereinsatz."),
+         ("Service","/ueber-uns/service/","Flächendeckend in ganz Deutschland erreichbar, damit Hilfe schnell dort ist, wo sie gebraucht wird."),
+         ("Innovation","/ueber-uns/innovationen/","Wirklich brauchbare Innovationen für Einfachheit, Bedienfreundlichkeit und weniger Schnickschnack."),
          ("Nachhaltigkeit","/ueber-uns/nachhaltigkeit/","Extrem niedriger Wasser- und Energieverbrauch."),
        ],1)) + '</div></div></section>'
  + """<section class="band-cta">
