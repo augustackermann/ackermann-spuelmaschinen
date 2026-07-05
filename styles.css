@@ -83,7 +83,7 @@ img { max-width: 100%; display: block; }
 .hero--slim .hero__inner { padding: 2.8rem 0; }
 .hero--split .hero__inner { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
 .hero__content { max-width: 44rem; }
-.hero h1 { font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; margin-bottom: 1.1rem; }
+.hero h1 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; margin-bottom: 1.1rem; text-shadow: 0 2px 16px rgba(0,0,0,.28); }
 .hero__lead { font-size: 1.12rem; color: #d3d6dd; max-width: 40rem; margin-bottom: 1.8rem; }
 .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 .hero__media { display: grid; place-items: center; }
@@ -161,14 +161,21 @@ img { max-width: 100%; display: block; }
 }
 
 /* home: partner intro */
-.partner { text-align: center; }
-.partner__inner { max-width: 52rem; }
+.partner { text-align: left; }
+.partner__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 420px); gap: 3rem; align-items: center; }
+.partner__copy { max-width: 52rem; }
 .partner h1 { font-size: clamp(1.9rem, 4vw, 2.9rem); margin-bottom: 1.2rem; }
 .partner__text { font-size: 1.1rem; color: var(--ink-soft); margin: 0 0 1.8rem; }
 .partner__text a { color: var(--teal); font-weight: 600; }
 .partner__text a:hover { color: var(--teal-dark); }
-.partner__team { margin-top: 3rem; display: grid; place-items: center; }
-.partner__team img { width: min(640px, 100%); height: auto; border-radius: 22px; box-shadow: var(--shadow-md); }
+.partner__team { display: grid; place-items: center; }
+.partner__team img { width: 100%; height: auto; border-radius: 22px; box-shadow: var(--shadow-md); }
+@media (max-width: 860px) {
+  .partner { text-align: center; }
+  .partner__inner { grid-template-columns: 1fr; gap: 2rem; }
+  .partner__copy { max-width: none; }
+  .partner__team img { width: min(460px, 100%); }
+}
 
 /* alternative / spülmobil section with image */
 .alt-sec__inner { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }

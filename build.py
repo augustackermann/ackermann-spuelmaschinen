@@ -243,6 +243,14 @@ CHEMIE_PRODUCTS = [
      "Geschirrspuelsalz.jpg", None),
 ]
 
+ACKERMANN_REASONS = [
+    ("Unser Team", "/ueber-uns/", "Bodenständig, persönlich und nah dran an den Menschen, die täglich mit unserer Technik arbeiten."),
+    ("Qualität", "/ueber-uns/qualitaet/", "Robuste Maschinen, gebaut für den harten Alltag in Küche, Betrieb und Dauereinsatz."),
+    ("Service", "/ueber-uns/service/", "Flächendeckend in ganz Deutschland erreichbar, damit Hilfe schnell dort ist, wo sie gebraucht wird."),
+    ("Innovation", "/ueber-uns/innovationen/", "Wirklich brauchbare Innovationen für Einfachheit, Bedienfreundlichkeit und weniger Schnickschnack."),
+    ("Nachhaltigkeit", "/ueber-uns/nachhaltigkeit/", "Extrem niedriger Wasser- und Energieverbrauch."),
+]
+
 # ---------------------------------------------------------------- builders
 def cards_solutions():
     c = "".join(f"""<a class="card" href="{u}">
@@ -338,24 +346,26 @@ PAGES = {}
 # HOME
 PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
  "/", "Dein Partner für gewerbliche Spültechnik",
- story_slider()
+story_slider()
  + """<section class="section partner">
   <div class="container partner__inner">
-    <h1>Dein Partner für gewerbliche Spültechnik</h1>
-    <p class="partner__text">Ackermann Spülmaschinen ist Dein Partner für gewerbliche Spülmaschinen:
-    ob in der <a href="/gastronomie-und-hotellerie/">Gastronomie und Hotellerie</a>, der
-    <a href="/gemeinschaftsverpflegung-und-catering/">Gemeinschaftsverpflegung</a>, für
-    <a href="/baeckereien-und-metzgereien/">Bäckereien und Metzgereien</a> oder beim
-    <a href="/ausser-haus-und-mobiles-spuelen/">mobilen Spülen</a> auf Feiern und Festen.
-    Wir bieten Dir das beste Preis-Leistungs-Verhältnis im Premiumbereich und darüber hinaus einen
-    erstklassigen <a href="/ueber-uns/service/">Service</a>, sinnvolle
-    <a href="/ueber-uns/innovationen/">Innovationen</a> und
-    <a href="/ueber-uns/nachhaltigkeit/">nachhaltige Lösungen</a> – zum Beispiel durch einen
-    extrem niedrigen Wasserverbrauch.</p>
-    <a href="#loesungen" class="btn btn--primary">Entdecke unsere Lösungen für Deine Branche!</a>
-  </div>
-  <div class="container partner__team">
-    <img src="/assets/img/Gruppenbild-2.png" alt="Das Ackermann Spülmaschinen Team">
+    <div class="partner__copy">
+      <h1>Dein Partner für gewerbliche Spültechnik</h1>
+      <p class="partner__text">Ackermann Spülmaschinen ist Dein Partner für gewerbliche Spülmaschinen:
+      ob in der <a href="/gastronomie-und-hotellerie/">Gastronomie und Hotellerie</a>, der
+      <a href="/gemeinschaftsverpflegung-und-catering/">Gemeinschaftsverpflegung</a>, für
+      <a href="/baeckereien-und-metzgereien/">Bäckereien und Metzgereien</a> oder beim
+      <a href="/ausser-haus-und-mobiles-spuelen/">mobilen Spülen</a> auf Feiern und Festen.
+      Wir bieten Dir das beste Preis-Leistungs-Verhältnis im Premiumbereich und darüber hinaus einen
+      erstklassigen <a href="/ueber-uns/service/">Service</a>, sinnvolle
+      <a href="/ueber-uns/innovationen/">Innovationen</a> und
+      <a href="/ueber-uns/nachhaltigkeit/">nachhaltige Lösungen</a> – zum Beispiel durch einen
+      extrem niedrigen Wasserverbrauch.</p>
+      <a href="#loesungen" class="btn btn--primary">Entdecke unsere Lösungen für Deine Branche!</a>
+    </div>
+    <div class="partner__team">
+      <img src="/assets/img/Gruppenbild-2.png" alt="Das Ackermann Spülmaschinen Team">
+    </div>
   </div>
 </section>"""
  + """<section class="section section--dark alt-sec">
@@ -403,13 +413,7 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
        "Unsere Stärke liegt nicht in lauten Versprechen, sondern in Technik, Service und Haltung, die im Alltag zuverlässig funktionieren.")
    + '<div class="pillars">'
    + "".join(f'<a class="pillar" href="{u}"><span class="pillar__no">{n:02d}</span><h3>{t}</h3><p>{d}</p></a>'
-       for n,(t,u,d) in enumerate([
-         ("Unser Team","/ueber-uns/","Bodenständig, persönlich und nah dran an den Menschen, die täglich mit unserer Technik arbeiten."),
-         ("Qualität","/ueber-uns/qualitaet/","Robuste Maschinen, gebaut für den harten Alltag in Küche, Betrieb und Dauereinsatz."),
-         ("Service","/ueber-uns/service/","Flächendeckend in ganz Deutschland erreichbar, damit Hilfe schnell dort ist, wo sie gebraucht wird."),
-         ("Innovation","/ueber-uns/innovationen/","Wirklich brauchbare Innovationen für Einfachheit, Bedienfreundlichkeit und weniger Schnickschnack."),
-         ("Nachhaltigkeit","/ueber-uns/nachhaltigkeit/","Extrem niedriger Wasser- und Energieverbrauch."),
-       ],1)) + '</div></div></section>'
+       for n,(t,u,d) in enumerate(ACKERMANN_REASONS,1)) + '</div></div></section>'
  + """<section class="band-cta">
   <div class="container band-cta__inner">
     <img src="/assets/img/bee-light.png" alt="" class="band-cta__bee" aria-hidden="true">
@@ -572,12 +576,7 @@ PAGES["/ueber-uns/"] = ("ueber-uns/index.html", "Über uns", page(
    + section_head("Wofür wir stehen", "Fünf Gründe für Ackermann")
    + '<div class="pillars">'
    + "".join(f'<a class="pillar" href="{u}"><span class="pillar__no">{n:02d}</span><h3>{t}</h3><p>{d}</p></a>'
-       for n,(t,u,d) in enumerate([
-         ("Qualität","/ueber-uns/qualitaet/","Premium-Technik, die im harten Alltag zuverlässig läuft."),
-         ("Service","/ueber-uns/service/","Schnell erreichbar, kompetent vor Ort – aus einer Hand."),
-         ("Innovationen","/ueber-uns/innovationen/","Durchdachte Technik für bessere Ergebnisse und Effizienz."),
-         ("Nachhaltigkeit","/ueber-uns/nachhaltigkeit/","Extrem niedriger Wasser- und Energieverbrauch."),
-       ],1)) + '</div></div></section>'
+       for n,(t,u,d) in enumerate(ACKERMANN_REASONS,1)) + '</div></div></section>'
  + cta_band("Werde ein Andersmacher", "Sprich mit uns über die Alternative im Premiumbereich."),
  "Familiengeführter Systemanbieter für gewerbliche Spültechnik aus Baindt – Top 5 der Branche."))
 
@@ -589,17 +588,17 @@ def about_sub(url, filename, title, eyebrow, lead, paras):
     PAGES[url] = (filename, title, page(url, title, body, lead))
 
 about_sub("/ueber-uns/qualitaet/", "ueber-uns/qualitaet/index.html", "Qualität", "Über uns",
-    "Premium-Qualität, die sich im Alltag beweist.",
-    ["Unsere Maschinen sind für den harten Dauereinsatz gebaut – langlebige Komponenten, durchdachte Technik und hervorragende Spülergebnisse.",
-     "Premium bedeutet für uns nicht überteuert, sondern verlässlich: Qualität, auf die Du Dich Tag für Tag verlassen kannst."])
+    "Robuste Qualität, die sich im Alltag beweist.",
+    ["Unsere Maschinen sind für den harten Dauereinsatz gebaut – mit langlebigen Komponenten, solider Konstruktion und Technik, die nicht empfindlich sein darf.",
+     "Qualität heißt für uns: zuverlässig laufen, einfach zu warten sein und auch dann sauber spülen, wenn es im Betrieb richtig zur Sache geht."])
 about_sub("/ueber-uns/service/", "ueber-uns/service/index.html", "Service", "Über uns",
-    "Service aus einer Hand – schnell und kompetent.",
-    ["Beratung, Installation, Wartung und Ersatzteile: Bei uns kommt alles aus einer Hand. Wir sind schnell erreichbar und dann vor Ort, wenn es darauf ankommt.",
+    "Service flächendeckend in ganz Deutschland.",
+    ["Beratung, Installation, Wartung und Ersatzteile: Bei uns kommt alles aus einer Hand. Unser Service ist flächendeckend in ganz Deutschland erreichbar und dann vor Ort, wenn es darauf ankommt.",
      "So minimierst Du Ausfallzeiten und hast einen Partner, der Deinen Betrieb wirklich kennt."])
-about_sub("/ueber-uns/innovationen/", "ueber-uns/innovationen/index.html", "Innovationen", "Über uns",
-    "Durchdachte Technik für bessere Ergebnisse.",
-    ["Wir entwickeln unsere Spültechnik konsequent weiter – für bessere Ergebnisse, einfachere Bedienung und mehr Effizienz.",
-     "Jede Innovation muss sich im Praxisalltag beweisen. Nur was den Betrieb spürbar besser macht, kommt in unsere Maschinen."])
+about_sub("/ueber-uns/innovationen/", "ueber-uns/innovationen/index.html", "Innovation", "Über uns",
+    "Wirklich brauchbare Innovation statt Schnickschnack.",
+    ["Wir entwickeln unsere Spültechnik konsequent weiter – für einfachere Bedienung, klarere Abläufe und mehr Effizienz im Alltag.",
+     "Jede Innovation muss sich im Praxisalltag beweisen. Nur was den Betrieb spürbar einfacher macht, kommt in unsere Maschinen."])
 about_sub("/ueber-uns/nachhaltigkeit/", "ueber-uns/nachhaltigkeit/index.html", "Nachhaltigkeit", "Über uns",
     "Spülen mit gutem Gewissen.",
     ["Extrem niedriger Wasser- und Energieverbrauch ist bei uns kein Extra, sondern Standard. Ressourcenschonende Technik spart Kosten und schont die Umwelt.",
