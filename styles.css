@@ -105,14 +105,15 @@ img { max-width: 100%; display: block; }
 .story__bee--2 { bottom: 10%; right: 5%; width: 90px; opacity: .18; animation: bee-float 8s ease-in-out infinite reverse; }
 @keyframes bee-float { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-16px) rotate(4deg); } }
 
-/* split slider: full-bleed edge to edge, quote panel left, image right */
+/* split slider: full-bleed edge to edge, quote panel over full-width image */
 .story { padding: 0; }
 .as-grid {
-  display: grid; grid-template-columns: 1fr 1.3fr;
+  display: grid; grid-template-columns: minmax(320px, .42fr) minmax(0, 1fr);
   min-height: clamp(480px, 72vh, 760px);
 }
 .as-panel {
-  background: linear-gradient(150deg, var(--ink), #1e2430 62%, var(--teal-dark) 190%);
+  grid-column: 1; grid-row: 1; z-index: 2;
+  background: linear-gradient(150deg, rgba(22,25,34,.94), rgba(30,36,48,.9) 62%, rgba(0,116,129,.88) 190%);
   color: #fff; display: flex; flex-direction: column;
   justify-content: center; align-items: flex-start; gap: 1.1rem;
   position: relative;
@@ -130,7 +131,7 @@ img { max-width: 100%; display: block; }
 .as-person { display: flex; flex-direction: column; gap: .1rem; }
 .as-person strong { font-family: "Poppins",sans-serif; font-size: 1.02rem; color: #fff; }
 .as-person span { color: #9fd6dd; font-size: .92rem; }
-.as-media { position: relative; min-height: 320px; background: var(--ink); }
+.as-media { grid-column: 1 / -1; grid-row: 1; position: relative; min-height: 320px; background: var(--ink); }
 .story-photo {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transition: opacity .9s ease; will-change: opacity;
@@ -154,9 +155,9 @@ img { max-width: 100%; display: block; }
 
 @media (max-width: 860px) {
   .as-grid { grid-template-columns: 1fr; }
-  .as-panel { order: 1; padding: 2rem 1.6rem; }
+  .as-panel { padding: 2rem 1.6rem; align-self: end; background: linear-gradient(0deg, rgba(22,25,34,.96), rgba(22,25,34,.78) 76%, transparent); }
   .as-panel blockquote { min-height: 4.5em; font-size: 1.35rem; }
-  .as-media { order: 2; aspect-ratio: 16/10; min-height: 0; }
+  .as-media { min-height: clamp(560px, 78vh, 680px); }
 }
 
 /* home: partner intro */
