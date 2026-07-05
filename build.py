@@ -166,13 +166,13 @@ def section_head(eyebrow, h2, sub="", light=False):
 
 # ---------------------------------------------------------------- data
 SOLUTIONS = [
-    ("🍽️", "Gastronomie und Hotellerie", "/gastronomie-und-hotellerie/",
+    ("U-540-Bistro.png", "Gastronomie und Hotellerie", "/gastronomie-und-hotellerie/",
      "Zuverlässige Technik für Cafés, Bars, Restaurants und Hotels – einfach zu bedienen und wartungsarm."),
-    ("🥗", "Gemeinschaftsverpflegung und Catering", "/gemeinschaftsverpflegung-und-catering/",
+    ("H-640.png", "Gemeinschaftsverpflegung und Catering", "/gemeinschaftsverpflegung-und-catering/",
      "Spültechnik, mit der man rechnen kann – robuste Geräte für hohe Durchsätze und faire Betriebskosten."),
-    ("🥖", "Bäckereien und Metzgereien", "/baeckereien-und-metzgereien/",
+    ("F-920.png", "Bäckereien und Metzgereien", "/baeckereien-und-metzgereien/",
      "Heiß und fettig? Mit uns bleibst Du cool. Meister der Vielfalt für Bleche, Geschirr und Behälter."),
-    ("🎪", "Außer Haus und mobiles Spülen", "/ausser-haus-und-mobiles-spuelen/",
+    ("spuelmobil.jpg", "Außer Haus und mobiles Spülen", "/ausser-haus-und-mobiles-spuelen/",
      "Mit dem Spülmobil erfüllst Du alle Vorschriften und gewinnst maximale Flexibilität für jeden Einsatzort."),
 ]
 
@@ -246,11 +246,11 @@ CHEMIE_PRODUCTS = [
 # ---------------------------------------------------------------- builders
 def cards_solutions():
     c = "".join(f"""<a class="card" href="{u}">
-  <div class="card__icon">{ic}</div>
+  <div class="card__media"><img src="/assets/img/{'machines/' if img != 'spuelmobil.jpg' else ''}{img}" alt="{html.escape(t)}"></div>
   <h3>{html.escape(t)}</h3>
   <p>{html.escape(d)}</p>
   <span class="card__link">Mehr erfahren &rarr;</span>
-</a>""" for ic, t, u, d in SOLUTIONS)
+</a>""" for img, t, u, d in SOLUTIONS)
     return f'<div class="cards cards--4">{c}</div>'
 
 def machine_grid():
@@ -354,6 +354,9 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
     extrem niedrigen Wasserverbrauch.</p>
     <a href="#loesungen" class="btn btn--primary">Entdecke unsere Lösungen für Deine Branche!</a>
   </div>
+  <div class="container partner__team">
+    <img src="/assets/img/Gruppenbild-2.png" alt="Das Ackermann Spülmaschinen Team">
+  </div>
 </section>"""
  + f'<section class="section" id="loesungen"><div class="container">'
    + section_head("Lösungen für Deine Branche", "Für jeden Einsatz die passende Spültechnik",
@@ -388,7 +391,11 @@ PAGES["/"] = ("index.html", "Dein Partner für gewerbliche Spültechnik", page(
           <span class="card__link">Zu den Spülmaschinen &rarr;</span></div>
       </a>
       <a class="product" href="/produkte/spuelchemie/">
-        <div class="product__media product__media--chem">🧪</div>
+        <div class="product__media product__media--chem">
+          <img src="/assets/img/chemie/F_500_GS.jpg" alt="F 500 GS Reiniger">
+          <img src="/assets/img/chemie/Klar_GS.jpg" alt="KLAR GS Klarspüler">
+          <img src="/assets/img/chemie/Entkalker.jpg" alt="Entkalker F">
+        </div>
         <div class="product__body"><h3>Spülchemie</h3>
           <p>Passgenau abgestimmte Reiniger, Klarspüler und Pflegemittel für glänzend saubere Ergebnisse bei minimalem Verbrauch.</p>
           <span class="card__link">Zur Spülchemie &rarr;</span></div>
