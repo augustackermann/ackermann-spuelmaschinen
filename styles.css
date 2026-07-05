@@ -83,7 +83,7 @@ img { max-width: 100%; display: block; }
 .hero--slim .hero__inner { padding: 2.8rem 0; }
 .hero--split .hero__inner { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
 .hero__content { max-width: 44rem; }
-.hero h1 { color: #c4d4d8; font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; margin-bottom: 1.1rem; text-shadow: 0 2px 12px rgba(0,0,0,.2); }
+.hero h1 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; margin-bottom: 1.1rem; text-shadow: 0 2px 16px rgba(0,0,0,.28); }
 .hero__lead { font-size: 1.12rem; color: #d3d6dd; max-width: 40rem; margin-bottom: 1.8rem; }
 .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 .hero__media { display: grid; place-items: center; }
