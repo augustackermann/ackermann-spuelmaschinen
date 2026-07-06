@@ -536,7 +536,7 @@ def machine_cards(slugs):
     for slug in slugs:
         name, use, img = MACHINE_BY_SLUG[slug]
         cards += f"""<a class="machine" href="/produkte/spuelmaschinen/{slug}/">
-  <div class="machine__media"><img src="/assets/img/machines/{img}" alt="{html.escape(name)}" loading="lazy"></div>
+  <div class="machine__media"><img src="{machine_image(slug, img)}" alt="{html.escape(name)}" loading="lazy"></div>
   <h4>{html.escape(name)}</h4>
   <p>{html.escape(use)}</p>
   <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
@@ -1191,6 +1191,11 @@ MACHINE_LINK_DEFAULTS.update({
     "Datenblatt_KT_1_Plus-KT_2_Plus.pdf": "kt-1-plus",
 })
 
+MACHINE_IMAGE_DEFAULTS = {
+    os.path.basename(assets["image"]): slug
+    for slug, assets in MACHINE_ASSETS.items()
+}
+
 MACHINE_LINK_SEQUENCES = {
     "/produkte/spuelmaschinen/": {
         "Datenblatt_KT_1_KT_2_2024.pdf": ["kt-1", "kt-2"],
@@ -1256,6 +1261,33 @@ def link_official_machine_pages(official_url, content_html):
         flags=re.S,
     )
 
+def link_official_machine_images(official_url, content_html):
+    if official_url != "/produkte/spuelmaschinen/":
+        return content_html
+
+    def replace_image(match):
+        src = match.group("src")
+        filename = os.path.basename(src.split("#", 1)[0].split("?", 1)[0])
+        slug = MACHINE_IMAGE_DEFAULTS.get(filename)
+        if not slug:
+            return match.group(0)
+
+        label = html.escape(MACHINE_DETAIL.get(slug, {}).get("name", "Maschine"))
+        return (
+            f'{match.group("open")}<a class="machine-image-link" '
+            f'href="{machine_url(slug)}" aria-label="{label} ansehen">'
+            f'{match.group("img")}</a>{match.group("close")}'
+        )
+
+    return re.sub(
+        r'(?P<open><div class="image_wrapper[^"]*">\s*)'
+        r'(?P<img><img\b(?=[^>]*\bsrc="(?P<src>[^"]+)")[^>]*>)'
+        r'(?P<close>\s*</div>)',
+        replace_image,
+        content_html,
+        flags=re.S,
+    )
+
 def official_page_body(data, content_html=None):
     source = html.escape(data.get("source", ""))
     if content_html is None:
@@ -1275,6 +1307,7 @@ for official_url, official_data in OFFICIAL_PAGES.items():
     if official_text_length(content_html) < 80:
         continue
     content_html = link_official_machine_pages(official_url, content_html)
+    content_html = link_official_machine_images(official_url, content_html)
     title = official_data.get("title") or official_url.strip("/").replace("-", " ").title()
     description = official_data.get("description", "")
     filename = official_filename(official_url)
