@@ -224,6 +224,66 @@ MACHINES = {
     ],
 }
 
+MACHINE_ASSETS = {
+    "u-430-2": dict(
+        image="/assets/official/wp-content/uploads/2026/04/U430-2.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-430-1.pdf"),
+    "u-440": dict(
+        image="/assets/official/wp-content/uploads/2025/11/U-440.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-440.pdf"),
+    "u-540-bistro": dict(
+        image="/assets/official/wp-content/uploads/2025/11/U-540-Bistro.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-540-Bistro.pdf"),
+    "u-530-2": dict(
+        image="/assets/official/wp-content/uploads/2026/04/U530-2.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-530-1-U-530-1E.pdf"),
+    "u-540e": dict(
+        image="/assets/official/wp-content/uploads/2025/11/U-540E.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-540-U-540E.pdf"),
+    "u-640e": dict(
+        image="/assets/official/wp-content/uploads/2025/11/U-640E.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-U-640-U-640E.pdf"),
+    "h-530-2": dict(
+        image="/assets/official/wp-content/uploads/2026/04/H530-2.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-H530-1-und-H530-1E.pdf"),
+    "h-540e": dict(
+        image="/assets/official/wp-content/uploads/2025/11/H-540E.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-H-540-H-540E.pdf"),
+    "h-540e-klima-plus": dict(
+        image="/assets/official/wp-content/uploads/2025/11/H-540E-Klima-Plus.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-H540KlimaPlus-H540EKlimaPlus.pdf"),
+    "h-640": dict(
+        image="/assets/official/wp-content/uploads/2025/11/H-640.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-H640.pdf"),
+    "h-640-klima-plus": dict(
+        image="/assets/official/wp-content/uploads/2025/11/H-640-Klima-Plus.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-H640KlimaPlus.pdf"),
+    "f-720": dict(
+        image="/assets/official/wp-content/uploads/2025/11/F-720.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-F720.pdf"),
+    "f-920": dict(
+        image="/assets/official/wp-content/uploads/2025/11/F-920.png",
+        pdf="/assets/official/wp-content/uploads/2023/08/Datenblatt-F-920.pdf"),
+    "kt-1": dict(
+        image="/assets/official/wp-content/uploads/2025/11/KT1.png",
+        pdf="/assets/official/wp-content/uploads/2024/01/Datenblatt_KT_1_KT_2_2024.pdf"),
+    "kt-2": dict(
+        image="/assets/official/wp-content/uploads/2025/11/KT2.png",
+        pdf="/assets/official/wp-content/uploads/2024/01/Datenblatt_KT_1_KT_2_2024.pdf"),
+    "kt-1-plus": dict(
+        image="/assets/official/wp-content/uploads/2025/11/KT1-Plus.png",
+        pdf="/assets/official/wp-content/uploads/2024/01/Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf"),
+    "kt-2-plus": dict(
+        image="/assets/official/wp-content/uploads/2025/11/KT2-Plus.png",
+        pdf="/assets/official/wp-content/uploads/2024/01/Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf"),
+}
+
+def machine_image(slug, fallback):
+    return MACHINE_ASSETS.get(slug, {}).get("image", f"/assets/img/machines/{fallback}")
+
+def machine_url(slug):
+    return f"/produkte/spuelmaschinen/{slug}/"
+
 ANDERSMACHER = [
     ("Max.Café", "Ackermann_Max_Cafe_2.jpg", "/die-andersmacher/max-cafe/"),
     ("Härle's Hofcafé", "Ackermann_Haerle_Slider-3.jpg", "/die-andersmacher/haerles-hofcafe/"),
@@ -285,7 +345,7 @@ def machine_grid():
     out = []
     for cat, items in MACHINES.items():
         cards = "".join(f"""<a class="machine" href="/produkte/spuelmaschinen/{slug}/">
-  <div class="machine__media"><img src="/assets/img/machines/{img}" alt="{html.escape(name)}" loading="lazy"></div>
+  <div class="machine__media"><img src="{machine_image(slug, img)}" alt="{html.escape(name)}" loading="lazy"></div>
   <h4>{html.escape(name)}</h4>
   <p>{html.escape(use)}</p>
   <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
@@ -991,37 +1051,128 @@ MACHINE_DETAIL = {
    features=["Separate Vorspül- und Waschzone","Bis 270 Körbe/h bei nur 220 l/h","Automatischer Korbtransport","Für Großküche & Catering mit Höchstlast"]),
 }
 
-for slug, d in MACHINE_DETAIL.items():
-    url = f"/produkte/spuelmaschinen/{slug}/"
-    filename = f"produkte/spuelmaschinen/{slug}/index.html"
-    highs = "".join(f'<div class="spec-hi"><strong>{v}</strong><span>{html.escape(l)}</span></div>' for v, l in d["highlights"])
+for slug, assets in MACHINE_ASSETS.items():
+    if slug in MACHINE_DETAIL:
+        MACHINE_DETAIL[slug].update(assets)
+
+def machine_group(slug):
+    for cat, items in MACHINES.items():
+        for name, use, img, item_slug in items:
+            if item_slug == slug:
+                return cat, use
+    return "Spülmaschinen", "Gewerbliche Spültechnik"
+
+def related_machines(slug, limit=3):
+    category, _ = machine_group(slug)
+    all_items = [(cat, name, use, img, item_slug)
+                 for cat, items in MACHINES.items()
+                 for name, use, img, item_slug in items
+                 if item_slug != slug]
+    ordered = [i for i in all_items if i[0] == category] + [i for i in all_items if i[0] != category]
+    cards = ""
+    for _, name, use, img, item_slug in ordered[:limit]:
+        cards += f"""<a class="related-machine" href="{machine_url(item_slug)}">
+  <img src="{machine_image(item_slug, img)}" alt="{html.escape(name)}" loading="lazy">
+  <span>{html.escape(name)}</span>
+  <small>{html.escape(use)}</small>
+</a>"""
+    return f'<div class="related-machines">{cards}</div>'
+
+def machine_fit(slug):
+    if slug.startswith("f-"):
+        items = [
+            ("Bäckereien und Metzgereien", "/baeckereien-und-metzgereien/",
+             "Für Bleche, Töpfe, Behälter und stark verschmutztes Spülgut."),
+            ("Gemeinschaftsverpflegung und Catering", "/gemeinschaftsverpflegung-und-catering/",
+             "Wenn viel vorbereitet, gekocht und zügig nachgespült wird."),
+        ]
+    elif slug.startswith("kt-"):
+        items = [
+            ("Gemeinschaftsverpflegung und Catering", "/gemeinschaftsverpflegung-und-catering/",
+             "Für kontinuierliches Spülen mit hohem Korbdurchsatz."),
+            ("Gastronomie und Hotellerie", "/gastronomie-und-hotellerie/",
+             "Für Häuser mit großem, planbarem Spülaufkommen."),
+        ]
+    elif slug.startswith("h-"):
+        items = [
+            ("Gastronomie und Hotellerie", "/gastronomie-und-hotellerie/",
+             "Für ergonomische Durchschubabläufe und schnelle Korbwechsel."),
+            ("Gemeinschaftsverpflegung und Catering", "/gemeinschaftsverpflegung-und-catering/",
+             "Für robuste Leistung in Küche, Kantine und Ausgabe."),
+        ]
+    else:
+        items = [
+            ("Gastronomie und Hotellerie", "/gastronomie-und-hotellerie/",
+             "Für Bar, Bistro, Café, Restaurant und Hotelküche."),
+            ("Außer Haus und mobiles Spülen", "/ausser-haus-und-mobiles-spuelen/",
+             "Als kompakte Lösung, wenn Platz und Anschlusswerte zählen."),
+        ]
+    return "".join(
+        f'<a class="machine-fit__item" href="{url}"><strong>{html.escape(title)}</strong><span>{html.escape(text)}</span></a>'
+        for title, url, text in items)
+
+def machine_detail_body(slug, d):
+    name = html.escape(d["name"])
+    series = html.escape(d["series"])
+    tagline = html.escape(d["tagline"])
+    highs = "".join(f'<div class="spec-hi"><strong>{html.escape(v)}</strong><span>{html.escape(l)}</span></div>'
+                    for v, l in d["highlights"])
     feats = "".join(f'<li>{html.escape(x)}</li>' for x in d["features"])
     rows = "".join(f'<tr><th>{html.escape(l)}</th><td>{html.escape(v)}</td></tr>' for l, v in d["specs"])
     intro = "".join(f"<p>{html.escape(p)}</p>" for p in d["intro"])
-    enote = f'<p class="enote">✚ {html.escape(d["e_note"])}</p>' if d.get("e_note") else ""
-    body = (
+    enote = f'<p class="enote">+ {html.escape(d["e_note"])}</p>' if d.get("e_note") else ""
+    image = d["image"]
+    pdf = d["pdf"]
+    return (
       f'<div class="crumb"><div class="container"><a href="/produkte/spuelmaschinen/">Spülmaschinen</a> '
-      f'<span>›</span> {html.escape(d["name"])}</div></div>'
-      + hero(f'Spülmaschinen · {d["series"]}', html.escape(d["name"]), html.escape(d["tagline"]),
-             cta=[("Anfrage senden", "/kontakt/", "btn--primary"),
-                  ("Datenblatt (PDF)", d["pdf"], "btn--ghost")],
-             img=f'/assets/img/machines/{d["img"]}', cls="hero--sub")
+      f'<span>&rsaquo;</span> {name}</div></div>'
+      + f"""<section class="machine-hero">
+  <div class="container machine-hero__inner">
+    <div class="machine-hero__copy">
+      <p class="eyebrow eyebrow--light">Spülmaschinen · {series}</p>
+      <h1>{name}</h1>
+      <p class="machine-hero__lead">{tagline}</p>
+      <div class="machine-hero__chips">
+        <span>Aus dem Datenblatt</span>
+        <span>Original-Ackermann</span>
+        <span>Gewerblicher Einsatz</span>
+      </div>
+      <div class="hero__actions">
+        <a href="/kontakt/" class="btn btn--primary">Beratung anfragen</a>
+        <a href="{pdf}" class="btn btn--ghost" target="_blank" rel="noopener">Original-Datenblatt</a>
+      </div>
+    </div>
+    <figure class="machine-hero__visual">
+      <img src="{image}" alt="{name}">
+    </figure>
+  </div>
+</section>"""
       + f'<section class="spec-hi-band"><div class="container spec-hi-grid">{highs}</div></section>'
-      + '<section class="section"><div class="container spec-layout">'
-        + f'<div class="spec-intro"><p class="eyebrow">Überblick</p><h2>{html.escape(d["name"])} im Detail</h2>'
-          f'{intro}{enote}<ul class="feature-list">{feats}</ul></div>'
-        + f'<aside class="spec-card"><h3>Technische Daten</h3><table class="spec-table"><tbody>{rows}</tbody></table>'
-          f'<a class="btn btn--primary datasheet-btn" href="{d["pdf"]}" target="_blank" rel="noopener">⭳ Original-Datenblatt (PDF)</a>'
+      + '<section class="section machine-detail-section"><div class="container machine-detail-grid">'
+        + f'<div class="machine-main">'
+          f'<div class="machine-panel"><p class="eyebrow">Überblick</p><h2>{name} im Detail</h2>{intro}{enote}'
+          f'<ul class="feature-list">{feats}</ul></div>'
+          f'<div class="machine-panel machine-panel--soft"><p class="eyebrow">Passt besonders gut für</p>'
+          f'<div class="machine-fit">{machine_fit(slug)}</div></div>'
+        f'</div>'
+        + f'<aside class="spec-card machine-spec-card"><span class="spec-source">Original-Datenblatt</span>'
+          f'<h3>Technische Daten</h3><table class="spec-table"><tbody>{rows}</tbody></table>'
+          f'<a class="btn btn--primary datasheet-btn" href="{pdf}" target="_blank" rel="noopener">Original-Datenblatt öffnen</a>'
           f'<p class="spec-note">Alle Angaben laut offiziellem Datenblatt. Änderungen und Irrtümer vorbehalten.</p></aside>'
       + '</div></section>'
-      + cta_band(f'Passt die {html.escape(d["name"])} zu Deinem Betrieb?',
+      + cta_band(f'Passt die {name} zu Deinem Betrieb?',
                  "Wir beraten Dich persönlich und unverbindlich – und finden die richtige Maschine.",
                  "Beratung anfragen")
       + '<section class="section section--muted"><div class="container">'
-        + section_head("Weitere Modelle", "Alle Spülmaschinen im Überblick")
-        + '<div style="text-align:center"><a class="btn btn--primary" href="/produkte/spuelmaschinen/">Zur Produktübersicht</a></div>'
+        + section_head("Weitere Modelle", "Ähnliche Maschinen entdecken")
+        + related_machines(slug)
+        + '<div class="machine-overview-link"><a class="btn btn--primary" href="/produkte/spuelmaschinen/">Zur kompletten Produktübersicht</a></div>'
       + '</div></section>')
-    PAGES[url] = (filename, d["name"], page("/produkte/spuelmaschinen/", d["name"], body,
+
+for slug, d in MACHINE_DETAIL.items():
+    url = machine_url(slug)
+    filename = f"produkte/spuelmaschinen/{slug}/index.html"
+    PAGES[url] = (filename, d["name"], page("/produkte/spuelmaschinen/", d["name"], machine_detail_body(slug, d),
         f'{d["name"]} – {d["tagline"]} Technische Daten und Datenblatt.'))
 
 def official_filename(url):
@@ -1032,11 +1183,86 @@ def official_text_length(content):
     text = html.unescape(re.sub(r"\s+", " ", text)).strip()
     return len(text)
 
-def official_page_body(data):
+MACHINE_LINK_DEFAULTS = {
+    os.path.basename(d["pdf"]): slug
+    for slug, d in MACHINE_DETAIL.items()
+}
+MACHINE_LINK_DEFAULTS.update({
+    "Datenblatt_KT_1_Plus-KT_2_Plus.pdf": "kt-1-plus",
+})
+
+MACHINE_LINK_SEQUENCES = {
+    "/produkte/spuelmaschinen/": {
+        "Datenblatt_KT_1_KT_2_2024.pdf": ["kt-1", "kt-2"],
+        "Datenblatt-KT_1-Plus-und_KT_2_Plus_2024.pdf": ["kt-1-plus", "kt-2-plus"],
+        "Datenblatt_KT_1_Plus-KT_2_Plus.pdf": ["kt-1-plus", "kt-2-plus"],
+    }
+}
+
+def machine_slug_from_context(filename, official_url, before_html, counts):
+    sequence = MACHINE_LINK_SEQUENCES.get(official_url, {}).get(filename)
+    if sequence:
+        idx = counts.get(filename, 0)
+        counts[filename] = idx + 1
+        return sequence[min(idx, len(sequence) - 1)]
+
+    context = html.unescape(re.sub(r"<[^>]+>", " ", before_html[-900:])).lower()
+    context_checks = [
+        ("kt-2 plus", "kt-2-plus"),
+        ("kt 2 plus", "kt-2-plus"),
+        ("kt-1 plus", "kt-1-plus"),
+        ("kt 1 plus", "kt-1-plus"),
+        ("kt-2", "kt-2"),
+        ("kt 2", "kt-2"),
+        ("kt-1", "kt-1"),
+        ("kt 1", "kt-1"),
+    ]
+    for needle, slug in context_checks:
+        if needle in context:
+            return slug
+    return MACHINE_LINK_DEFAULTS.get(filename)
+
+def link_official_machine_pages(official_url, content_html):
+    if official_url == "/downloadbereich/":
+        return content_html
+
+    counts = {}
+
+    def replace_link(match):
+        href = match.group("href")
+        filename = os.path.basename(href.split("#", 1)[0].split("?", 1)[0])
+        if filename not in MACHINE_LINK_DEFAULTS:
+            return match.group(0)
+
+        slug = machine_slug_from_context(filename, official_url, content_html[:match.start()], counts)
+        if not slug:
+            return match.group(0)
+
+        prefix = re.sub(r'\s+(?:target|rel)="[^"]*"', "", match.group("prefix"))
+        suffix = re.sub(r'\s+(?:target|rel)="[^"]*"', "", match.group("suffix"))
+        link_body = match.group("body")
+        if official_url == "/produkte/spuelmaschinen/":
+            link_body = re.sub(
+                r'(<span class="button_label">)\s*Datenblatt\s*(</span>)',
+                r"\1Zur Maschine\2",
+                link_body,
+            )
+        return f'<a{prefix}href="{machine_url(slug)}"{suffix}>{link_body}</a>'
+
+    return re.sub(
+        r'<a(?P<prefix>[^>]*?)href="(?P<href>[^"]+)"(?P<suffix>[^>]*)>(?P<body>.*?)</a>',
+        replace_link,
+        content_html,
+        flags=re.S,
+    )
+
+def official_page_body(data, content_html=None):
     source = html.escape(data.get("source", ""))
+    if content_html is None:
+        content_html = data.get("content_html", "")
     return (
         f'<section class="official-page" data-source="{source}">'
-        f'{data.get("content_html", "")}'
+        f'{content_html}'
         '</section>'
     )
 
@@ -1048,13 +1274,14 @@ for official_url, official_data in OFFICIAL_PAGES.items():
     # overview pages instead of replacing them with near-empty content.
     if official_text_length(content_html) < 80:
         continue
+    content_html = link_official_machine_pages(official_url, content_html)
     title = official_data.get("title") or official_url.strip("/").replace("-", " ").title()
     description = official_data.get("description", "")
     filename = official_filename(official_url)
     PAGES[official_url] = (
         filename,
         title,
-        page(official_url, title, official_page_body(official_data), description),
+        page(official_url, title, official_page_body(official_data, content_html), description),
     )
 
 # BASE_PATH lets the same source deploy at a sub-path (GitHub Pages project site)
