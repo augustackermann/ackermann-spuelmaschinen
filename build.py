@@ -3,9 +3,18 @@
 Runs top-to-bottom, writing every page with a shared header/footer so the
 navigation stays consistent. Re-run after editing content: `python3 build.py`.
 """
-import os, html
+import os, html, json, re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+OFFICIAL_PAGES_PATH = os.path.join(ROOT, "official_pages.json")
+
+def load_official_pages():
+    if not os.path.exists(OFFICIAL_PAGES_PATH):
+        return {}
+    with open(OFFICIAL_PAGES_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+OFFICIAL_PAGES = load_official_pages()
 
 # ---------------------------------------------------------------- navigation
 NAV = [
@@ -27,7 +36,18 @@ NAV = [
         ("Innovationen", "/ueber-uns/innovationen/"),
         ("Nachhaltigkeit", "/ueber-uns/nachhaltigkeit/"),
     ]),
-    ("Die Andersmacher", "/die-andersmacher/", []),
+    ("Die Andersmacher", None, [
+        ("Max.Café", "/die-andersmacher/max-cafe/"),
+        ("Härle‘s Hofcafé", "/die-andersmacher/haerles-hofcafe/"),
+        ("Pier 40", "/die-andersmacher/pier-40/"),
+        ("Haus Nazareth", "/die-andersmacher/haus-nazareth/"),
+        ("Stotz Hof", "/die-andersmacher/stotz-hof/"),
+        ("Biolandhof Kelly", "/die-andersmacher/biolandhof-kelly/"),
+        ("Metzgerei Kutter", "/die-andersmacher/metzgerei-kutter/"),
+        ("Culina", "/die-andersmacher/culina/"),
+        ("Hirscheck", "/die-andersmacher/hirscheck/"),
+        ("Ellgass", "/die-andersmacher/ellgass/"),
+    ]),
     ("Karriere", "/karriere/", []),
     ("News", "/news/", []),
     ("Kontakt", "/kontakt/", []),
@@ -122,8 +142,8 @@ def page(active, title, body, description=""):
       <a href="tel:+4975029779100">+49 (0)7502 97791 00</a>
       <a href="mailto:info@ackermann-spuelmaschinen.de">info@ackermann-spuelmaschinen.de</a>
       <div class="footer__social">
-        <a href="https://www.facebook.com/ackermann.spuelmaschinen/" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/ackermann.spuelmaschinen/?locale=de_DE" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/ackermann_spuelmaschinen/" target="_blank" rel="noopener">Instagram</a>
       </div>
       <a href="/impressum/">Impressum</a>
       <a href="/datenschutz/">Datenschutz</a>
@@ -1004,6 +1024,39 @@ for slug, d in MACHINE_DETAIL.items():
     PAGES[url] = (filename, d["name"], page("/produkte/spuelmaschinen/", d["name"], body,
         f'{d["name"]} – {d["tagline"]} Technische Daten und Datenblatt.'))
 
+def official_filename(url):
+    return "index.html" if url == "/" else f"{url.strip('/')}/index.html"
+
+def official_text_length(content):
+    text = re.sub(r"<[^>]+>", " ", content)
+    text = html.unescape(re.sub(r"\s+", " ", text)).strip()
+    return len(text)
+
+def official_page_body(data):
+    source = html.escape(data.get("source", ""))
+    return (
+        f'<section class="official-page" data-source="{source}">'
+        f'{data.get("content_html", "")}'
+        '</section>'
+    )
+
+for official_url, official_data in OFFICIAL_PAGES.items():
+    if official_url == "/":
+        continue
+    content_html = official_data.get("content_html", "")
+    # Some WordPress parent pages are only menu containers. Keep the local
+    # overview pages instead of replacing them with near-empty content.
+    if official_text_length(content_html) < 80:
+        continue
+    title = official_data.get("title") or official_url.strip("/").replace("-", " ").title()
+    description = official_data.get("description", "")
+    filename = official_filename(official_url)
+    PAGES[official_url] = (
+        filename,
+        title,
+        page(official_url, title, official_page_body(official_data), description),
+    )
+
 # BASE_PATH lets the same source deploy at a sub-path (GitHub Pages project site)
 # or at root (local server). All internal refs start with ="/ ; external ones
 # start with ="http, ="tel:, ="mailto:, ="# and are left untouched.
@@ -1013,6 +1066,8 @@ count = 0
 for url, (filename, title, content) in PAGES.items():
     if BASE:
         content = content.replace('="/', f'="{BASE}/')
+        content = content.replace("='/", f"='{BASE}/")
+        content = content.replace("url(/", f"url({BASE}/")
     path = os.path.join(ROOT, filename)
     os.makedirs(os.path.dirname(path) or ROOT, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
