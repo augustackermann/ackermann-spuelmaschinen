@@ -348,7 +348,6 @@ def machine_grid():
   <div class="machine__media"><img src="{machine_image(slug, img)}" alt="{html.escape(name)}" loading="lazy"></div>
   <h4>{html.escape(name)}</h4>
   <p>{html.escape(use)}</p>
-  <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
 </a>""" for name, use, img, slug in items)
         out.append(f'<h3 class="machine-cat">{html.escape(cat)}</h3><div class="cards cards--4 machine-row">{cards}</div>')
     return "\n".join(out)
@@ -539,7 +538,6 @@ def machine_cards(slugs):
   <div class="machine__media"><img src="{machine_image(slug, img)}" alt="{html.escape(name)}" loading="lazy"></div>
   <h4>{html.escape(name)}</h4>
   <p>{html.escape(use)}</p>
-  <span class="machine__link">Details &amp; Datenblatt &rarr;</span>
 </a>"""
     return f'<div class="cards cards--4 machine-row">{cards}</div>'
 
@@ -1183,6 +1181,77 @@ def official_text_length(content):
     text = html.unescape(re.sub(r"\s+", " ", text)).strip()
     return len(text)
 
+OFFICIAL_HERO_DEFAULT = "/assets/official/wp-content/uploads/2023/07/Ackermann_Spuelmaschine_mit_Edelstahl.jpg"
+OFFICIAL_HERO_BACKGROUNDS = {
+    "/produkte/": OFFICIAL_HERO_DEFAULT,
+    "/produkte/spuelmaschinen/": OFFICIAL_HERO_DEFAULT,
+    "/produkte/spuelchemie/": "/assets/official/wp-content/uploads/2024/01/Klar_GS.jpg",
+    "/ueber-uns/": "/assets/official/wp-content/uploads/2025/06/Gruppenbild-2.png",
+    "/ueber-uns/qualitaet/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Qualitaet.jpg",
+    "/ueber-uns/service/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-service.jpg",
+    "/ueber-uns/innovationen/": OFFICIAL_HERO_DEFAULT,
+    "/ueber-uns/nachhaltigkeit/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Bienenvolk.jpg",
+    "/karriere/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-karriere.jpg",
+    "/news/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-news.jpg",
+    "/kontakt/": "/assets/official/wp-content/uploads/2023/08/Ackermann_Team_Kundendienst.jpg",
+    "/downloadbereich/": OFFICIAL_HERO_DEFAULT,
+    "/die-andersmacher/": "/assets/img/Ackermann-Spuelmaschinen-Pier40-Slider.jpg",
+    "/unsere-werte/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Bienenvolk.jpg",
+    "/impressum/": OFFICIAL_HERO_DEFAULT,
+    "/datenschutz/": OFFICIAL_HERO_DEFAULT,
+    "/cookie-richtlinie-eu/": OFFICIAL_HERO_DEFAULT,
+}
+
+def official_hero_background(official_url, content_html):
+    if official_url in OFFICIAL_HERO_BACKGROUNDS:
+        return OFFICIAL_HERO_BACKGROUNDS[official_url]
+    match = re.search(r'<img\b(?=[^>]*\bsrc="([^"]+)")[^>]*>', content_html)
+    return match.group(1) if match else OFFICIAL_HERO_DEFAULT
+
+def enhance_official_hero(official_url, content_html):
+    background = official_hero_background(official_url, content_html)
+    title = html.escape(OFFICIAL_PAGES.get(official_url, {}).get("title")
+                        or official_url.strip("/").replace("-", " ").title())
+
+    def replace_first_section(match):
+        style = match.group("style")
+        compact_style = style.replace(" ", "")
+        if "background-image:url(" in compact_style and "background-image:url()" not in compact_style:
+            return match.group(0)
+        style = style.rstrip()
+        if style and not style.endswith(";"):
+            style += ";"
+        style += (
+            f"background-image:url({background});"
+            "background-repeat:no-repeat;"
+            "background-position:center;"
+            "background-size:cover"
+        )
+        return f'<section{match.group("before")}style="{style}"{match.group("after")}>'
+
+    enhanced, count = re.subn(
+        r'<section(?P<before>[^>]*?\bclass="[^"]*\bsection\b[^"]*"[^>]*?)'
+        r'style="(?P<style>[^"]*)"(?P<after>[^>]*)>',
+        replace_first_section,
+        content_html,
+        count=1,
+        flags=re.S,
+    )
+    if count:
+        return enhanced
+
+    return (
+        f'<section class="section mcb-section generated-official-hero" '
+        f'style="background-image:url({background});background-repeat:no-repeat;'
+        f'background-position:center;background-size:cover">'
+        f'<div class="section_wrapper mcb-section-inner">'
+        f'<div class="wrap one" style="background-color:#0090a0">'
+        f'<div class="mcb-wrap-inner"><div class="column one column_column">'
+        f'<div class="column_attr align_right mobile_align_center"><h1>{title}</h1></div>'
+        f'</div></div></div></div></section>'
+        f'{content_html}'
+    )
+
 MACHINE_LINK_DEFAULTS = {
     os.path.basename(d["pdf"]): slug
     for slug, d in MACHINE_DETAIL.items()
@@ -1242,21 +1311,28 @@ def link_official_machine_pages(official_url, content_html):
         slug = machine_slug_from_context(filename, official_url, content_html[:match.start()], counts)
         if not slug:
             return match.group(0)
+        if official_url == "/produkte/spuelmaschinen/":
+            return ""
 
         prefix = re.sub(r'\s+(?:target|rel)="[^"]*"', "", match.group("prefix"))
         suffix = re.sub(r'\s+(?:target|rel)="[^"]*"', "", match.group("suffix"))
         link_body = match.group("body")
-        if official_url == "/produkte/spuelmaschinen/":
-            link_body = re.sub(
-                r'(<span class="button_label">)\s*Datenblatt\s*(</span>)',
-                r"\1Zur Maschine\2",
-                link_body,
-            )
         return f'<a{prefix}href="{machine_url(slug)}"{suffix}>{link_body}</a>'
 
     return re.sub(
         r'<a(?P<prefix>[^>]*?)href="(?P<href>[^"]+)"(?P<suffix>[^>]*)>(?P<body>.*?)</a>',
         replace_link,
+        content_html,
+        flags=re.S,
+    )
+
+def remove_official_machine_buttons(official_url, content_html):
+    if official_url != "/produkte/spuelmaschinen/":
+        return content_html
+    return re.sub(
+        r'<div class="column\b(?=[^"]*\bcolumn_button\b)[^"]*"[^>]*>\s*'
+        r'<div class="mcb-column-inner[^"]*"[^>]*>\s*</div>\s*</div>',
+        "",
         content_html,
         flags=re.S,
     )
@@ -1306,7 +1382,9 @@ for official_url, official_data in OFFICIAL_PAGES.items():
     # overview pages instead of replacing them with near-empty content.
     if official_text_length(content_html) < 80:
         continue
+    content_html = enhance_official_hero(official_url, content_html)
     content_html = link_official_machine_pages(official_url, content_html)
+    content_html = remove_official_machine_buttons(official_url, content_html)
     content_html = link_official_machine_images(official_url, content_html)
     title = official_data.get("title") or official_url.strip("/").replace("-", " ").title()
     description = official_data.get("description", "")
