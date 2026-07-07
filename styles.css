@@ -847,3 +847,40 @@ img { max-width: 100%; display: block; }
   .official-page[data-source$="/news/"] .post-photo-wrapper .image_wrapper { aspect-ratio: 4 / 3; }
   .official-page[data-source$="/news/"] .post-desc { min-height: 0; padding: 1.2rem; }
 }
+
+/* Square edges for all site images and button-like controls. */
+img,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.button,
+.post-more,
+.story-arrow,
+.story-dot,
+.nav-toggle span,
+.image_frame,
+.image_wrapper,
+.post-photo-wrapper,
+.card__media,
+.product,
+.product__media,
+.machine__media,
+.machine-hero__visual,
+.ref,
+.ref__media,
+.ref-detail__media,
+.team,
+.team .image_frame,
+.official-page img,
+.official-page .image_frame,
+.official-page .image_wrapper,
+.official-page .button,
+.official-page button,
+.official-page input[type="submit"],
+.official-page[data-source$="/news/"] .post-item,
+.official-page[data-source$="/news/"] .post-photo-wrapper img,
+.official-page[data-source$="/news/"] .post-more {
+  border-radius: 0 !important;
+}
