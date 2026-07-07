@@ -1181,26 +1181,43 @@ def official_text_length(content):
     text = html.unescape(re.sub(r"\s+", " ", text)).strip()
     return len(text)
 
-OFFICIAL_HERO_DEFAULT = "/assets/official/wp-content/uploads/2023/07/Ackermann_Spuelmaschine_mit_Edelstahl.jpg"
+OFFICIAL_HERO_DEFAULT = "/assets/official/wp-content/uploads/2023/08/ackermann-header-gastronomie-hotellerie.jpg"
 OFFICIAL_HERO_BACKGROUNDS = {
     "/produkte/": OFFICIAL_HERO_DEFAULT,
     "/produkte/spuelmaschinen/": OFFICIAL_HERO_DEFAULT,
     "/produkte/spuelchemie/": "/assets/official/wp-content/uploads/2024/01/Klar_GS.jpg",
-    "/ueber-uns/": "/assets/official/wp-content/uploads/2025/06/Gruppenbild-2.png",
-    "/ueber-uns/qualitaet/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Qualitaet.jpg",
+    "/ueber-uns/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-karriere.jpg",
+    "/ueber-uns/qualitaet/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-biene.jpg",
     "/ueber-uns/service/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-service.jpg",
     "/ueber-uns/innovationen/": OFFICIAL_HERO_DEFAULT,
-    "/ueber-uns/nachhaltigkeit/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Bienenvolk.jpg",
+    "/ueber-uns/nachhaltigkeit/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-biene.jpg",
     "/karriere/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-karriere.jpg",
     "/news/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-news.jpg",
-    "/kontakt/": "/assets/official/wp-content/uploads/2023/08/Ackermann_Team_Kundendienst.jpg",
+    "/kontakt/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-service.jpg",
     "/downloadbereich/": OFFICIAL_HERO_DEFAULT,
+    "/ausser-haus-und-mobiles-spuelen/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-catering-gemeinschaftsverpflegung.jpg",
     "/die-andersmacher/": "/assets/img/Ackermann-Spuelmaschinen-Pier40-Slider.jpg",
-    "/unsere-werte/": "/assets/official/wp-content/uploads/2023/07/Ackermann_Bienenvolk.jpg",
+    "/die-andersmacher/biolandhof-kelly/": "/assets/official/wp-content/uploads/2024/04/Bioandhof_Kelly_Ackermann_Spuelmashinen-5.jpg",
+    "/die-andersmacher/culina/": "/assets/img/ackermann-andersmacher-culina-slider.jpg",
+    "/die-andersmacher/ellgass/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-biene.jpg",
+    "/die-andersmacher/haerles-hofcafe/": "/assets/img/Ackermann_Haerle_Slider-3.jpg",
+    "/die-andersmacher/hirscheck/": "/assets/official/wp-content/uploads/2026/01/Hirscheck_07.jpg",
+    "/die-andersmacher/pier-40/": "/assets/img/Ackermann-Spuelmaschinen-Pier40-Slider.jpg",
+    "/unsere-werte/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-biene.jpg",
     "/impressum/": OFFICIAL_HERO_DEFAULT,
     "/datenschutz/": OFFICIAL_HERO_DEFAULT,
     "/cookie-richtlinie-eu/": OFFICIAL_HERO_DEFAULT,
 }
+
+OFFICIAL_IMAGE_REPLACEMENTS = {
+    "/assets/official/wp-content/uploads/2025/06/Hannah-Roth.png":
+        "/assets/official/wp-content/uploads/2026/06/Hannah-Roth.png",
+}
+
+def replace_low_res_official_images(content_html):
+    for old, new in OFFICIAL_IMAGE_REPLACEMENTS.items():
+        content_html = content_html.replace(old, new)
+    return content_html
 
 def official_hero_background(official_url, content_html):
     if official_url in OFFICIAL_HERO_BACKGROUNDS:
@@ -1216,7 +1233,9 @@ def enhance_official_hero(official_url, content_html):
     def replace_first_section(match):
         style = match.group("style")
         compact_style = style.replace(" ", "")
-        if "background-image:url(" in compact_style and "background-image:url()" not in compact_style:
+        if (official_url not in OFFICIAL_HERO_BACKGROUNDS
+                and "background-image:url(" in compact_style
+                and "background-image:url()" not in compact_style):
             return match.group(0)
         style = style.rstrip()
         if style and not style.endswith(";"):
@@ -1382,6 +1401,7 @@ for official_url, official_data in OFFICIAL_PAGES.items():
     # overview pages instead of replacing them with near-empty content.
     if official_text_length(content_html) < 80:
         continue
+    content_html = replace_low_res_official_images(content_html)
     content_html = enhance_official_hero(official_url, content_html)
     content_html = link_official_machine_pages(official_url, content_html)
     content_html = remove_official_machine_buttons(official_url, content_html)
