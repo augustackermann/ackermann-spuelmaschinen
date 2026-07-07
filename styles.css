@@ -585,6 +585,111 @@ img { max-width: 100%; display: block; }
 .official-page[data-source$="/news/"] .image_wrapper .mask {
   display: none !important;
 }
+.official-page[data-source$="/news/"] .posts_group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: stretch;
+}
+.official-page[data-source$="/news/"] .post-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.official-page[data-source$="/news/"] .post-photo-wrapper {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.official-page[data-source$="/news/"] .post-photo-wrapper .image_wrapper,
+.official-page[data-source$="/news/"] .post-photo-wrapper .image_wrapper a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.official-page[data-source$="/news/"] .post-photo-wrapper .image_wrapper {
+  aspect-ratio: 16 / 10;
+  background: var(--muted);
+}
+.official-page[data-source$="/news/"] .post-photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform .2s ease;
+}
+.official-page[data-source$="/news/"] .post-item:hover .post-photo-wrapper img { transform: scale(1.025); }
+.official-page[data-source$="/news/"] .date_label { display: none; }
+.official-page[data-source$="/news/"] .post-desc-wrapper {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+.official-page[data-source$="/news/"] .post-desc {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 270px;
+  padding: 1.45rem 1.55rem 1.35rem;
+}
+.official-page[data-source$="/news/"] .post-head { margin: 0 0 .65rem; }
+.official-page[data-source$="/news/"] .post-meta,
+.official-page[data-source$="/news/"] .post-date {
+  color: var(--teal);
+  font-size: .83rem;
+  font-weight: 700;
+}
+.official-page[data-source$="/news/"] .post-title h3 {
+  margin: 0 0 .8rem;
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  line-height: 1.25;
+}
+.official-page[data-source$="/news/"] .post-title a {
+  color: var(--ink);
+  font-weight: 800;
+}
+.official-page[data-source$="/news/"] .post-title a:hover { color: var(--teal); }
+.official-page[data-source$="/news/"] .post-excerpt {
+  color: var(--ink-soft);
+  font-size: .96rem;
+  line-height: 1.62;
+  margin: 0 0 1.25rem;
+}
+.official-page[data-source$="/news/"] .post-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: auto;
+  padding-top: .9rem;
+  border-top: 1px solid var(--line);
+}
+.official-page[data-source$="/news/"] .button-love { display: none; }
+.official-page[data-source$="/news/"] .post-links {
+  display: inline-flex;
+  align-items: center;
+}
+.official-page[data-source$="/news/"] .post-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: .65rem 1.05rem;
+  border-radius: 999px;
+  background: var(--teal-light);
+  color: var(--teal);
+  font-size: .9rem;
+  font-weight: 800;
+}
+.official-page[data-source$="/news/"] .post-more:hover {
+  background: var(--teal);
+  color: #fff;
+}
 .official-page .button,
 .official-page button,
 .official-page input[type="submit"] {
@@ -675,6 +780,8 @@ img { max-width: 100%; display: block; }
   .official-page .column.one-fifth,
   .official-page .wrap.one-third,
   .official-page .column.one-third { flex-basis: calc(50% - 1rem); }
+  .official-page[data-source$="/news/"] .posts_group { gap: 1.4rem; }
+  .official-page[data-source$="/news/"] .post-desc { min-height: 290px; padding: 1.3rem; }
 }
 @media (max-width: 760px) {
   .topbar { display: none; }
@@ -736,4 +843,7 @@ img { max-width: 100%; display: block; }
   .official-page .align_right { text-align: center; }
   .official-page .full-width .section_wrapper,
   .official-page .full-width .mcb-section-inner { width: 100%; }
+  .official-page[data-source$="/news/"] .posts_group { grid-template-columns: 1fr; gap: 1.25rem; }
+  .official-page[data-source$="/news/"] .post-photo-wrapper .image_wrapper { aspect-ratio: 4 / 3; }
+  .official-page[data-source$="/news/"] .post-desc { min-height: 0; padding: 1.2rem; }
 }
