@@ -848,6 +848,106 @@ img { max-width: 100%; display: block; }
   .official-page[data-source$="/news/"] .post-desc { min-height: 0; padding: 1.2rem; }
 }
 
+/* compact machine overview */
+.official-page[data-source$="/produkte/spuelmaschinen/"] .section:not(:first-child):not(:nth-child(2)) {
+  padding: 2.4rem 0;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.column_attr h3) {
+  padding: 2.7rem 0 .75rem;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) {
+  padding: .55rem 0 2.5rem;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) .section_wrapper,
+.official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) .mcb-section-inner {
+  gap: 1.15rem;
+  justify-content: flex-start;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) {
+  flex: 0 1 calc(25% - .9rem);
+  max-width: calc(25% - .9rem);
+  padding: .9rem .85rem 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link):hover {
+  transform: translateY(-3px);
+  border-color: #cbe7ea;
+  box-shadow: var(--shadow-md);
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) .mcb-wrap-inner {
+  gap: .55rem;
+  align-content: stretch;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .machine-image-link {
+  display: grid;
+  place-items: center;
+  min-height: 150px;
+  padding: .7rem;
+  background: linear-gradient(180deg, #f8fbfc, #eef6f7);
+  border: 1px solid #e6eff1;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .machine-image-link img {
+  width: auto;
+  max-width: 100%;
+  max-height: 125px;
+  object-fit: contain;
+  box-shadow: none;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .mcb-item-heading-inner .title {
+  margin: .15rem 0 0;
+  color: var(--ink);
+  font-family: "Poppins", sans-serif;
+  font-size: .98rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) .column_attr p {
+  margin: 0;
+  color: var(--slate);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 1000px) {
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) {
+    flex-basis: calc(33.333% - .8rem);
+    max-width: calc(33.333% - .8rem);
+  }
+}
+@media (max-width: 760px) {
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.column_attr h3) {
+    padding: 2rem 0 .55rem;
+  }
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) {
+    padding: .35rem 0 2rem;
+  }
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) .section_wrapper,
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .section:has(.machine-image-link) .mcb-section-inner {
+    gap: .85rem;
+  }
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) {
+    flex-basis: calc(50% - .45rem);
+    max-width: calc(50% - .45rem);
+    padding: .75rem;
+  }
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .machine-image-link {
+    min-height: 132px;
+  }
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .machine-image-link img {
+    max-height: 108px;
+  }
+}
+@media (max-width: 520px) {
+  .official-page[data-source$="/produkte/spuelmaschinen/"] .wrap.one-third:has(.machine-image-link) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
 /* Square edges for all site images and button-like controls. */
 img,
 button,
@@ -860,17 +960,40 @@ input[type="reset"],
 .story-arrow,
 .story-dot,
 .nav-toggle span,
+.submenu,
+.submenu a,
 .image_frame,
 .image_wrapper,
 .post-photo-wrapper,
+.card,
 .card__media,
+.card__icon,
+.pillar,
+.chem-card,
 .product,
 .product__media,
+.machine,
 .machine__media,
 .machine-hero__visual,
+.machine-hero__chips span,
+.spec-hi-grid,
+.machine-panel,
+.machine-panel li,
+.spec-card,
+.spec-tag,
+.related-machine,
 .ref,
 .ref__media,
 .ref-detail__media,
+.news,
+.news__tag,
+.newsletter__form,
+.newsletter__form input,
+.newsletter__form select,
+.contact__form,
+.contact__form input,
+.contact__form textarea,
+.mapbox,
 .team,
 .team .image_frame,
 .official-page img,
@@ -878,7 +1001,12 @@ input[type="reset"],
 .official-page .image_wrapper,
 .official-page .button,
 .official-page button,
+.official-page input,
+.official-page textarea,
+.official-page select,
 .official-page input[type="submit"],
+.official-page .wrap.one-third:has(.machine-image-link),
+.official-page .machine-image-link,
 .official-page[data-source$="/news/"] .post-item,
 .official-page[data-source$="/news/"] .post-photo-wrapper img,
 .official-page[data-source$="/news/"] .post-more {
