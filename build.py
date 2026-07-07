@@ -1185,7 +1185,7 @@ OFFICIAL_HERO_DEFAULT = "/assets/official/wp-content/uploads/2023/08/ackermann-h
 OFFICIAL_HERO_BACKGROUNDS = {
     "/produkte/": OFFICIAL_HERO_DEFAULT,
     "/produkte/spuelmaschinen/": OFFICIAL_HERO_DEFAULT,
-    "/produkte/spuelchemie/": "/assets/official/wp-content/uploads/2024/01/Klar_GS.jpg",
+    "/produkte/spuelchemie/": "/assets/official/wp-content/uploads/2023/08/Ackermann-Spuelmaschine-Gastronomie-Hotellerie-2.jpg",
     "/ueber-uns/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-karriere.jpg",
     "/ueber-uns/qualitaet/": "/assets/official/wp-content/uploads/2023/07/ackermann-header-biene.jpg",
     "/ueber-uns/service/": "/assets/official/wp-content/uploads/2023/08/ackermann-header-service.jpg",

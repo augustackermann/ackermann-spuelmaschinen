@@ -581,13 +581,9 @@ img { max-width: 100%; display: block; }
 .official-page .section:nth-child(2) p,
 .official-page .section:nth-child(2) .column_attr { color: #fff !important; }
 .official-page .section:first-child h1 { text-shadow: 0 2px 16px rgba(0,0,0,.26); }
-.official-page[data-source$="/produkte/spuelchemie/"] .section:first-child {
-  background-color: #f4fbfb !important;
-  background-position: right clamp(1rem, 8vw, 7rem) center !important;
-  background-size: auto min(118%, 540px) !important;
-}
-.official-page[data-source$="/produkte/spuelchemie/"] .section:first-child::before {
-  background: linear-gradient(90deg, rgba(22,25,34,.03), rgba(22,25,34,.08));
+.official-page[data-source$="/news/"] .image_links,
+.official-page[data-source$="/news/"] .image_wrapper .mask {
+  display: none !important;
 }
 .official-page .button,
 .official-page button,
@@ -656,7 +652,7 @@ img { max-width: 100%; display: block; }
 /* footer */
 .footer { background: var(--ink); color: #a9adb6; padding-top: 3.4rem; }
 .footer__inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem; padding-bottom: 2.6rem; }
-.footer__bee { height: 56px; width: auto; margin-bottom: 1rem; opacity: .9; }
+.footer__bee { height: 56px; width: auto; margin-bottom: 1rem; padding-bottom: 5px; box-sizing: content-box; opacity: .9; }
 .footer__claim { font-family: "Poppins",sans-serif; color: #fff; font-weight: 600; margin: 0 0 1rem; }
 .footer__addr { font-size: .92rem; }
 .footer__col h4 { color: #fff; font-size: 1rem; margin-bottom: 1rem; }

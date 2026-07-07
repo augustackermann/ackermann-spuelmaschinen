@@ -23,14 +23,16 @@
   }
   function next() { show(i + 1); }
   function prev() { show(i - 1); }
-  function start() { stop(); timer = setInterval(next, 5500); }
+  function start() { stop(); timer = setInterval(next, 5000); }
   function stop() { if (timer) clearInterval(timer); }
 
   story.querySelector('.story-arrow--next').addEventListener('click', () => { next(); start(); });
   story.querySelector('.story-arrow--prev').addEventListener('click', () => { prev(); start(); });
   dots.forEach((d) => d.addEventListener('click', () => { show(+d.dataset.go); start(); }));
-  story.addEventListener('mouseenter', stop);
-  story.addEventListener('mouseleave', start);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else start();
+  });
   start();
 })();
 
