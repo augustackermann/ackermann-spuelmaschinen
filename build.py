@@ -94,7 +94,7 @@ def page(active, title, body, description=""):
       <a href="tel:+4975029779100">&#9742; +49 (0)7502 97791&nbsp;00</a>
       <a href="mailto:info@ackermann-spuelmaschinen.de">&#9993; info@ackermann-spuelmaschinen.de</a>
     </div>
-    <a class="topbar__shop" href="/kontakt/">Zum Händlershop &rarr;</a>
+    <a class="topbar__shop" href="https://shop.ackermann-spuelmaschinen.de/start,ackermann,de" target="_blank" rel="noopener">Zum Händlershop &rarr;</a>
   </div>
 </div>
 
@@ -781,7 +781,7 @@ PAGES["/kontakt/"] = ("kontakt/index.html", "Kontakt", page(
        <li><span>E-Mail</span><a href="mailto:info@ackermann-spuelmaschinen.de">info@ackermann-spuelmaschinen.de</a></li>
        <li><span>Öffnungszeiten</span><span>Mo–Do 08:00–17:00 Uhr<br>Fr 08:00–15:00 Uhr</span></li>
      </ul>
-     <a href="/kontakt/" class="btn btn--primary">Zum Händlershop</a>
+     <a href="https://shop.ackermann-spuelmaschinen.de/start,ackermann,de" class="btn btn--primary" target="_blank" rel="noopener">Zum Händlershop</a>
    </div>
    <form class="contact__form" onsubmit="alert('Danke! Dies ist eine Demo – bitte kontaktiere uns per Telefon oder E-Mail.');return false;">
      <div class="row"><input type="text" placeholder="Vorname" aria-label="Vorname" required><input type="text" placeholder="Nachname" aria-label="Nachname" required></div>
