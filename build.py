@@ -29,6 +29,7 @@ NAV = [
         ("Spülmaschinen", "/produkte/spuelmaschinen/"),
         ("Spülchemie", "/produkte/spuelchemie/"),
     ]),
+    ("Maschinenfinder", "/maschinenfinder/", []),
     ("Über uns", "/ueber-uns/", [
         ("Unser Team", "/ueber-uns/"),
         ("Qualität", "/ueber-uns/qualitaet/"),
@@ -132,6 +133,7 @@ def page(active, title, body, description=""):
       <h4>Entdecken</h4>
       <a href="/produkte/spuelmaschinen/">Spülmaschinen</a>
       <a href="/produkte/spuelchemie/">Spülchemie</a>
+      <a href="/maschinenfinder/">Maschinenfinder</a>
       <a href="/ueber-uns/">Über uns</a>
       <a href="/die-andersmacher/">Die Andersmacher</a>
       <a href="/karriere/">Karriere</a>
@@ -605,6 +607,146 @@ PAGES["/produkte/spuelmaschinen/"] = ("produkte/spuelmaschinen/index.html", "Sp�
  + '<section class="section"><div class="container">' + machine_grid() + '</div></section>'
  + cta_band("Welche Maschine passt zu Deinem Betrieb?", "Wir beraten Dich gern und finden die passende Lösung."),
  "Untertisch-, Hauben-, Geräte- und Korbtransportspülmaschinen von Ackermann."))
+
+# MASCHINENFINDER – guided preselection based on washware, peak load,
+# installation, electrical supply, water hardness and finish requirements.
+PAGES["/maschinenfinder/"] = ("maschinenfinder/index.html", "Maschinenfinder", page(
+ "/maschinenfinder/", "Maschinenfinder",
+ hero("Maschinenfinder", "Welche Spülmaschine passt zu Deinem Betrieb?",
+      "In sechs kurzen Schritten erhältst Du eine fundierte Vorauswahl – inklusive Wasseraufbereitung, passenden Körben und Spülchemie.",
+      cls="hero--sub finder-hero")
+ + """<section class="section finder-section">
+  <div class="container">
+    <div class="finder-intro">
+      <p class="eyebrow">Geführte Auswahl</p>
+      <h2>Dein Spülsystem statt nur einer Maschine</h2>
+      <p>Entscheidend sind Spülgut, Spitzenleistung, Arbeitsablauf und Wasserqualität. Der Finder verbindet diese Angaben zu einer nachvollziehbaren Empfehlung.</p>
+    </div>
+
+    <div class="finder" id="maschinenfinder">
+      <div class="finder__progress" aria-label="Fortschritt">
+        <div class="finder__progress-meta"><span id="finder-step-label">Schritt 1 von 6</span><span id="finder-progress-value">17 %</span></div>
+        <div class="finder__progress-track" aria-hidden="true"><span id="finder-progress-bar"></span></div>
+      </div>
+
+      <form id="finder-form" novalidate>
+        <fieldset class="finder-step is-active" data-step="0">
+          <legend>Was soll hauptsächlich gespült werden?</legend>
+          <p class="finder-step__help">Wähle das größte oder anspruchsvollste Spülgut, das regelmäßig anfällt.</p>
+          <div class="finder-choices finder-choices--3">
+            <label class="finder-choice"><input type="radio" name="washware" value="glasses"><span><strong>Gläser &amp; Tassen</strong><small>Bar, Café, Bistro</small></span></label>
+            <label class="finder-choice"><input type="radio" name="washware" value="dishes"><span><strong>Geschirr &amp; Besteck</strong><small>Restaurant, Hotel, Kantine</small></span></label>
+            <label class="finder-choice"><input type="radio" name="washware" value="mixed"><span><strong>Gemischtes Spülgut</strong><small>Gläser, Geschirr und kleinere Gerätschaften</small></span></label>
+            <label class="finder-choice"><input type="radio" name="washware" value="tray600"><span><strong>Tabletts &amp; Behälter</strong><small>Bis 600 × 400 mm / EN 4</small></span></label>
+            <label class="finder-choice"><input type="radio" name="washware" value="utensil800"><span><strong>Bleche, Töpfe &amp; Geräte</strong><small>Bis 800 × 600 mm</small></span></label>
+            <label class="finder-choice"><input type="radio" name="washware" value="utensil1200"><span><strong>Sehr großes Spülgut</strong><small>Bis 1.200 × 600 mm</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="1" hidden>
+          <legend>Welche Spitzenleistung wird benötigt?</legend>
+          <p class="finder-step__help">Gemeint ist die stärkste Stunde – nicht der Tagesdurchschnitt. Bei Gerätespülmaschinen bestimmt vor allem die Größe des Spülguts die Auswahl.</p>
+          <div class="finder-choices finder-choices--3">
+            <label class="finder-choice"><input type="radio" name="capacity" value="40"><span><strong>Bis 40 Körbe/h</strong><small>Kompakter Betrieb</small></span></label>
+            <label class="finder-choice"><input type="radio" name="capacity" value="48"><span><strong>41–48 Körbe/h</strong><small>Starker Untertischbetrieb</small></span></label>
+            <label class="finder-choice"><input type="radio" name="capacity" value="60"><span><strong>49–60 Körbe/h</strong><small>Durchschub-Spitzen</small></span></label>
+            <label class="finder-choice"><input type="radio" name="capacity" value="160"><span><strong>61–160 Körbe/h</strong><small>Kontinuierliches Spülen</small></span></label>
+            <label class="finder-choice"><input type="radio" name="capacity" value="200"><span><strong>161–200 Körbe/h</strong><small>Hohes Großküchen-Aufkommen</small></span></label>
+            <label class="finder-choice"><input type="radio" name="capacity" value="270"><span><strong>201–270 Körbe/h</strong><small>Maximaler Durchsatz</small></span></label>
+          </div>
+          <details class="finder-help"><summary>Körbe/h noch unbekannt?</summary><p>Als Orientierung: Ein 500-×-500-mm-Tellerkorb fasst typischerweise 18 flache oder 12 tiefe Teller. Spülgut-Mix, Vorsortierung und Spitzenzeit beeinflussen den tatsächlichen Bedarf stark.</p></details>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="2" hidden>
+          <legend>Welcher Arbeitsablauf passt vor Ort?</legend>
+          <p class="finder-step__help">Platz, Ergonomie und Zu-/Ablauf sind genauso wichtig wie die reine Maschinenleistung.</p>
+          <div class="finder-choices">
+            <label class="finder-choice"><input type="radio" name="setup" value="compact400"><span><strong>Sehr kompakt unter der Theke</strong><small>400-×-400-mm-Körbe</small></span></label>
+            <label class="finder-choice"><input type="radio" name="setup" value="under500"><span><strong>Untertisch, Standardbreite</strong><small>500-×-500-mm-Körbe</small></span></label>
+            <label class="finder-choice"><input type="radio" name="setup" value="hood"><span><strong>Haube / Durchschub</strong><small>Aufrechtes Arbeiten mit Zu- und Ablauftisch</small></span></label>
+            <label class="finder-choice"><input type="radio" name="setup" value="conveyor"><span><strong>Korbtransport-Linie</strong><small>Kontinuierlicher Durchsatz</small></span></label>
+            <label class="finder-choice"><input type="radio" name="setup" value="flexible"><span><strong>Noch offen</strong><small>Der Finder priorisiert Spülgut und Leistung</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="3" hidden>
+          <legend>Welcher Stromanschluss steht zur Verfügung?</legend>
+          <p class="finder-step__help">Leistungsstarke Hauben-, Geräte- und Transportmaschinen benötigen in der Regel 400 V.</p>
+          <div class="finder-choices finder-choices--3">
+            <label class="finder-choice"><input type="radio" name="power" value="230"><span><strong>Nur 230 V</strong><small>Normale 16-A-Steckdose</small></span></label>
+            <label class="finder-choice"><input type="radio" name="power" value="400"><span><strong>400 V vorhanden</strong><small>Drehstromanschluss</small></span></label>
+            <label class="finder-choice"><input type="radio" name="power" value="unknown"><span><strong>Noch unbekannt</strong><small>Vor Bestellung prüfen</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="4" hidden>
+          <legend>Wie hart ist das Rohwasser?</legend>
+          <p class="finder-step__help">Die Wasserhärte erfährst Du beim örtlichen Versorger oder mit einer Wasseranalyse.</p>
+          <div class="finder-choices">
+            <label class="finder-choice"><input type="radio" name="hardness" value="soft"><span><strong>Bis 5 °dH</strong><small>Weich – Ackermann-Zielbereich</small></span></label>
+            <label class="finder-choice"><input type="radio" name="hardness" value="medium"><span><strong>6–14 °dH</strong><small>Mittelhart – Enthärtung einplanen</small></span></label>
+            <label class="finder-choice"><input type="radio" name="hardness" value="hard"><span><strong>Über 14 °dH</strong><small>Hart bis sehr hart – Aufbereitung erforderlich</small></span></label>
+            <label class="finder-choice"><input type="radio" name="hardness" value="unknown"><span><strong>Unbekannt</strong><small>Wasseranalyse vor Auslegung</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="5" hidden>
+          <legend>Welches Spülergebnis ist das Ziel?</legend>
+          <p class="finder-step__help">Die gewünschte Brillanz entscheidet, ob Enthärtung genügt oder zusätzlich Salze und Mineralien entfernt werden sollen.</p>
+          <div class="finder-choices finder-choices--3">
+            <label class="finder-choice"><input type="radio" name="finish" value="standard"><span><strong>Hygienisch sauber</strong><small>Maschinenschutz und wirtschaftlicher Betrieb</small></span></label>
+            <label class="finder-choice"><input type="radio" name="finish" value="shine"><span><strong>Glänzend &amp; fleckenarm</strong><small>Weniger Klarspüler und Nacharbeit</small></span></label>
+            <label class="finder-choice"><input type="radio" name="finish" value="polishfree"><span><strong>Polierfrei / höchste Brillanz</strong><small>Besonders für Gläser und Besteck</small></span></label>
+          </div>
+          <label class="finder-check"><input type="checkbox" name="climate" value="yes"><span><strong>Weniger Wrasen und Energieverbrauch gewünscht</strong><small>Klima+-Wärmerückgewinnung bei passenden Haubenmodellen bevorzugen.</small></span></label>
+        </fieldset>
+
+        <p class="finder-error" id="finder-error" role="alert" hidden>Bitte wähle eine Antwort aus.</p>
+        <div class="finder__actions">
+          <button class="btn finder-back" type="button" id="finder-back" hidden>&larr; Zurück</button>
+          <button class="btn btn--primary finder-next" type="button" id="finder-next">Weiter &rarr;</button>
+        </div>
+      </form>
+
+      <section class="finder-result" id="finder-result" aria-live="polite" hidden>
+        <div class="finder-result__top">
+          <div class="finder-result__visual"><img id="finder-result-image" src="" alt=""></div>
+          <div class="finder-result__copy">
+            <p class="eyebrow">Deine Vorauswahl</p>
+            <h2 id="finder-result-name"></h2>
+            <p class="finder-result__series" id="finder-result-series"></p>
+            <ul class="finder-reasons" id="finder-result-reasons"></ul>
+            <a class="btn btn--primary" id="finder-result-link" href="">Maschine ansehen &rarr;</a>
+          </div>
+        </div>
+        <div class="finder-system-grid">
+          <article class="finder-system-card"><span class="finder-system-card__no">01</span><h3>Wasseraufbereitung</h3><p id="finder-water"></p></article>
+          <article class="finder-system-card"><span class="finder-system-card__no">02</span><h3>Körbe &amp; Zubehör</h3><ul id="finder-accessories"></ul></article>
+          <article class="finder-system-card"><span class="finder-system-card__no">03</span><h3>Spülchemie</h3><p id="finder-chemistry"></p></article>
+        </div>
+        <aside class="finder-notice" id="finder-notice"></aside>
+        <div class="finder-result__actions">
+          <button class="btn" type="button" id="finder-restart">Neu starten</button>
+          <a class="btn btn--primary" href="/kontakt/">Empfehlung prüfen lassen &rarr;</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section class="section section--muted finder-method">
+  <div class="container">
+    <div class="section__head"><p class="eyebrow">So entscheidet der Finder</p><h2>Von der Anforderung zum passenden System</h2></div>
+    <div class="finder-method__grid">
+      <article><strong>1</strong><h3>Spülgut vor Bauform</h3><p>Gläser, Geschirr, Tabletts und große Gerätschaften stellen unterschiedliche Anforderungen an Korbmaß und Einfahrhöhe.</p></article>
+      <article><strong>2</strong><h3>Spitzen statt Mittelwert</h3><p>Die stärkste Betriebsstunde bestimmt den notwendigen Korbdurchsatz und den Arbeitsablauf rund um die Maschine.</p></article>
+      <article><strong>3</strong><h3>Wasser als Systemteil</h3><p>Enthärtung schützt vor Kalk; Teil- oder Vollentsalzung und Umkehrosmose steigern die Brillanz und reduzieren Nachpolieren.</p></article>
+    </div>
+    <p class="finder-method__note">Der Maschinenfinder ist eine technische Vorauswahl. Wasseranalyse, Anschlusswerte, Platz, Zu-/Ablauf, Schmutzeintrag und reale Spitzenlast müssen vor Bestellung durch Ackermann oder den Fachhandel bestätigt werden.</p>
+  </div>
+</section>"""
+ + cta_band("Noch Fragen zur Empfehlung?", "Wir prüfen Wasser, Aufstellung und Spitzenleistung gemeinsam mit Dir.", "Persönlich beraten lassen"),
+ "Interaktiver Ackermann Maschinenfinder für gewerbliche Spülmaschinen, Wasseraufbereitung, Körbe, Zubehör und Spülchemie."))
 
 # PRODUCTS – Spülchemie (full product cards with image + datasheet)
 def chemie_grid():
